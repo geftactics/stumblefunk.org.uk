@@ -1,6 +1,8 @@
 # stumblefunk-accreditation
-###PHP application for managing ticket allocations 
-#### We get allocated x tickets when we run a venue/stage at a festival, this app helps us mange our allocation and also collects the details for each ticketholder that we need
+
+### PHP application for managing ticket allocations 
+
+##### We get allocated x tickets when we run a venue/stage at a festival, this app helps us mange our allocation and also collects the details for each ticketholder that we need
 
 * Docker container takes 4x evironment variables for MySQL config: `DB_HOST`, `DB_NAME`, `DB_USER` & `DB_PASS`
 
