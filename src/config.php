@@ -2,7 +2,12 @@
 
 error_reporting(E_ERROR | E_PARSE);
 
-session_start();
+
+// Class for sessions in database
+include("classes/database.class.php");
+include("classes/mysql.sessions.php");
+$session = new Session();
+
 
 if ($_SERVER[PHP_SELF] != '/index.php' && $_SERVER[PHP_SELF] != '/index_do.php') {
   if (!isset($_SESSION['user'])) {
@@ -11,8 +16,10 @@ if ($_SERVER[PHP_SELF] != '/index.php' && $_SERVER[PHP_SELF] != '/index_do.php')
   }
 }
 
+
 require  'Medoo.php';
 use Medoo\Medoo;
+
 
 $database = new Medoo([
     'database_type' => 'mysql',
