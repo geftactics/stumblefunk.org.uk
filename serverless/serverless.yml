@@ -1,0 +1,69 @@
+service: stumblefunk
+
+provider:
+  name: aws
+  region: ${opt:region, 'eu-west-1'}
+  stage: ${opt:stage, 'dev'}
+  runtime: nodejs12.x
+  environment:
+    TABLE_NAME: ${self:service}-${self:provider.stage}
+    ADMIN_ID: geoff
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "dynamodb:PutItem"
+        - "dynamodb:GetItem"
+        - "dynamodb:UpdateItem"
+        - "dynamodb:DeleteItem"
+        - "dynamodb:BatchGetItem"
+        - "dynamodb:BatchWriteItem"
+        - "dynamodb:Query"
+        - "dynamodb:Scan"
+      Resource:
+        - "arn:aws:dynamodb:*:*:table/${self:provider.environment.TABLE_NAME}"
+
+functions:
+  groups_create:
+    handler: groups.create
+    events:
+      - http: 
+          path: groups/create
+          method: POST
+  groups_list:
+    handler: groups.list
+    events:
+      - http: 
+          path: groups/list
+          method: POST
+  groups_update:
+    handler: groups.update
+    events:
+      - http: 
+          path: groups/update
+          method: POST
+  groups_delete:
+    handler: groups.delete
+    events:
+      - http: 
+          path: groups/delete
+          method: POST
+
+resources:
+  Resources:
+    MyDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        TableName: ${self:provider.environment.TABLE_NAME}
+        AttributeDefinitions:
+          -
+            AttributeName: "id"
+            AttributeType: "S"   
+        KeySchema:
+          -
+            AttributeName: "id"
+            KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+
