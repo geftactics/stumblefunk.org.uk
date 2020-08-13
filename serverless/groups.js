@@ -3,7 +3,7 @@
 const uuid = require("short-uuid");
 const AWS = require("aws-sdk");
 var db = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
-
+var dc = new AWS.DynamoDB.DocumentClient();
 
 // --- groups/create --------------------------------------------------------------------------------------------------------------
 
@@ -16,6 +16,7 @@ module.exports.create = async (event) => {
     TableName: process.env.TABLE_NAME,
     Item: {
       id: { S: newID },
+      group_name: { S: ""},
       adults: { N: "0" },
       kids: { N: "0" },
       vehicles: { N: "0" },
@@ -23,7 +24,7 @@ module.exports.create = async (event) => {
   };
 
   try {
-    const data = await db.putItem(params).promise();
+    var data = await db.putItem(params).promise();
   } catch (error) {
     console.log("DB ERROR: ", error);
     return response(400, "Database Error");
@@ -44,7 +45,7 @@ module.exports.list = async (event) => {
   };
 
   try {
-    var data = await db.scan(params).promise();
+    var data = await dc.scan(params).promise();
   } catch (error) {
     console.log("DB ERROR: ", error);
     return response(400, "Database Error");
@@ -59,7 +60,35 @@ module.exports.list = async (event) => {
 module.exports.update = async (event) => {
   const requestBody = JSON.parse(event.body);
   if (!isAdmin(requestBody.userID)) return response(401, "Unauthorized");
-  return response(200, "update function");
+  if (!requestBody.id) return response(400, "id not specified")
+  if (!requestBody.group_name) return response(400, "group_name not specified")
+  if (!Number.isInteger(requestBody.adults)) return response(400, "adults must be an integer")
+  if (!Number.isInteger(requestBody.kids)) return response(400, "kids must be an integer")
+  if (!Number.isInteger(requestBody.vehicles)) return response(400, "vehicles must be an integer")
+
+  var params = {
+    TableName: process.env.TABLE_NAME,
+    Key: {
+      id: requestBody.id,
+    },
+    UpdateExpression: "set kids=:k, adults=:a, vehicles=:v, group_name=:n",
+    ExpressionAttributeValues:{
+        ":k":requestBody.kids,
+        ":a":requestBody.adults,
+        ":v":requestBody.vehicles,
+        ":n":requestBody.group_name,
+    },
+    ReturnValues:"UPDATED_NEW"
+  };
+
+  try {
+    var data = await dc.update(params).promise();
+  } catch (error) {
+    console.log("DB ERROR: ", error);
+    return response(400, "Database Error");
+  }
+
+  return response(200, data.Attributes);
 };
 
 
@@ -68,7 +97,23 @@ module.exports.update = async (event) => {
 module.exports.delete = async (event) => {
   const requestBody = JSON.parse(event.body);
   if (!isAdmin(requestBody.userID)) return response(401, "Unauthorized");
-  return response(200, "delete function");
+  if (!requestBody.id) return response(400, "id not specified")
+
+  var params = {
+    TableName: process.env.TABLE_NAME,
+    Key: {
+      id: requestBody.id,
+    }
+  };
+
+  try {
+    var data = await dc.delete(params).promise();
+  } catch (error) {
+    console.log("DB ERROR: ", error);
+    return response(400, "Database Error");
+  }
+
+  return response(200, requestBody.id);
 };
 
 
