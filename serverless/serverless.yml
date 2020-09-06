@@ -29,24 +29,28 @@ functions:
       - http: 
           path: groups/create
           method: POST
+          cors: true
   groups_list:
     handler: groups.list
     events:
       - http: 
           path: groups/list
           method: POST
+          cors: true
   groups_update:
     handler: groups.update
     events:
       - http: 
           path: groups/update
           method: POST
+          cors: true
   groups_delete:
     handler: groups.delete
     events:
       - http: 
           path: groups/delete
           method: POST
+          cors: true
 
 resources:
   Resources:

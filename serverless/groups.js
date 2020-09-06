@@ -9,7 +9,7 @@ var dc = new AWS.DynamoDB.DocumentClient();
 
 module.exports.create = async (event) => {
   const requestBody = JSON.parse(event.body);
-  if (!isAdmin(requestBody.userID)) return response(401, "Unauthorized");
+  if (!requestBody || !requestBody.userID || !isAdmin(requestBody.userID)) return response(401, "Unauthorized");
 
   var newID = uuid.generate();
   var params = {
@@ -38,7 +38,7 @@ module.exports.create = async (event) => {
 
 module.exports.list = async (event) => {
   const requestBody = JSON.parse(event.body);
-  if (!isAdmin(requestBody.userID)) return response(401, "Unauthorized");
+  if (!requestBody || !requestBody.userID || !isAdmin(requestBody.userID)) return response(401, "Unauthorized");
 
   var params = {
     TableName: process.env.TABLE_NAME,
@@ -59,7 +59,7 @@ module.exports.list = async (event) => {
 
 module.exports.update = async (event) => {
   const requestBody = JSON.parse(event.body);
-  if (!isAdmin(requestBody.userID)) return response(401, "Unauthorized");
+  if (!requestBody || !requestBody.userID || !isAdmin(requestBody.userID)) return response(401, "Unauthorized");
   if (!requestBody.id) return response(400, "id not specified")
   if (!requestBody.group_name) return response(400, "group_name not specified")
   if (!Number.isInteger(requestBody.adults)) return response(400, "adults must be an integer")
@@ -96,7 +96,7 @@ module.exports.update = async (event) => {
 
 module.exports.delete = async (event) => {
   const requestBody = JSON.parse(event.body);
-  if (!isAdmin(requestBody.userID)) return response(401, "Unauthorized");
+  if (!requestBody || !requestBody.userID || !isAdmin(requestBody.userID)) return response(401, "Unauthorized");
   if (!requestBody.id) return response(400, "id not specified")
 
   var params = {
@@ -122,6 +122,10 @@ module.exports.delete = async (event) => {
 function response(code, message) {
   return {
     statusCode: code,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    },
     body: JSON.stringify({
       message: message,
     }),
