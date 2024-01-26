@@ -33,6 +33,12 @@ resource "aws_api_gateway_resource" "groups" {
   path_part   = "groups"
 }
 
+resource "aws_api_gateway_resource" "ticket" {
+  rest_api_id = aws_api_gateway_rest_api.this.id
+  parent_id   = aws_api_gateway_rest_api.this.root_resource_id
+  path_part   = "ticket"
+}
+
 
 // ---- Gateway methods ---------------------------------------------
 
@@ -75,6 +81,20 @@ resource "aws_api_gateway_method" "groups_get" {
   rest_api_id   = aws_api_gateway_rest_api.this.id
   resource_id   = aws_api_gateway_resource.groups.id
   http_method   = "GET"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_method" "ticket_post" {
+  rest_api_id   = aws_api_gateway_rest_api.this.id
+  resource_id   = aws_api_gateway_resource.ticket.id
+  http_method   = "POST"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_method" "ticket_delete" {
+  rest_api_id   = aws_api_gateway_rest_api.this.id
+  resource_id   = aws_api_gateway_resource.ticket.id
+  http_method   = "DELETE"
   authorization = "NONE"
 }
 
@@ -135,4 +155,20 @@ resource "aws_api_gateway_integration" "groups_get_integration" {
   uri                     = aws_lambda_function.accreditation.invoke_arn
 }
 
+resource "aws_api_gateway_integration" "ticket_post_integration" {
+  rest_api_id             = aws_api_gateway_rest_api.this.id
+  resource_id             = aws_api_gateway_resource.ticket.id
+  http_method             = aws_api_gateway_method.ticket_post.http_method
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  uri                     = aws_lambda_function.accreditation.invoke_arn
+}
 
+resource "aws_api_gateway_integration" "ticket_delete_integration" {
+  rest_api_id             = aws_api_gateway_rest_api.this.id
+  resource_id             = aws_api_gateway_resource.ticket.id
+  http_method             = aws_api_gateway_method.ticket_delete.http_method
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  uri                     = aws_lambda_function.accreditation.invoke_arn
+}

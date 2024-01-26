@@ -1,6 +1,6 @@
 data "archive_file" "lambda" {
   type        = "zip"
-  source_file = "lambda.py"
+  source_file = "lambda_code/lambda.py"
   output_path = "lambda_function_payload.zip"
 }
 
@@ -15,7 +15,7 @@ resource "aws_lambda_function" "accreditation" {
   environment {
     variables = {
       DDB_TABLE_GROUPS  = aws_dynamodb_table.groups.name
-      DDB_TABLE_TICKETS = aws_dynamodb_table.groups.name
+      DDB_TABLE_TICKETS = aws_dynamodb_table.tickets.name
       MASTER_USER = "masterpass"
     }
   }
