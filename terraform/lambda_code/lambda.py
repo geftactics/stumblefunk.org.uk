@@ -4,6 +4,9 @@ import json
 import logging
 import os
 import uuid
+from datetime import datetime, date
+
+close_date = "2024-01-30"
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -37,6 +40,8 @@ def handler(event, context):
         response = create_ticket(json.loads(event["body"]))
     elif http_method == 'DELETE' and path == '/ticket':
         response = delete_ticket(event["queryStringParameters"].get('ticket_id', None))
+    elif http_method == 'POST' and path == '/login':
+        response = login(json.loads(event["body"]))
     else:
         response = build_response(404, "Not Found")
     return response
@@ -359,6 +364,38 @@ def delete_ticket(ticket_id):
 
     except:
         logger.exception("ERROR - DELETE_TICKET")
+
+
+def login(request_body):
+    try:
+        if os.getenv("MASTER_USER") == request_body.get('group_id'):
+            group_id = request_body["group_id"]
+            body = {
+                "Operation": "LOGIN",
+                "Message": "ADMIN"
+            }
+            return build_response(200, body)
+        elif datetime.strptime(close_date, "%Y-%m-%d").date() <= date.today():
+            body = {
+                "Operation": "LOGIN",
+                "Message": "CLOSED"
+            }
+            return build_response(403, body)
+        elif group_table.get_item(Key={"group_id": request_body.get('group_id')}).get('Item'):
+            body = {
+                "Operation": "LOGIN",
+                "Message": "USER"
+            }
+            return build_response(200, body)
+        else:
+            body = {
+                "Operation": "LOGIN",
+                "Message": "ACCESS_DENIED"
+            }
+            return build_response(403, body)
+
+    except:
+        logger.exception("ERROR - MODIFY GROUP")
 
 
 # TODO: get tickets (all for group_id)

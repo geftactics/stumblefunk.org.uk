@@ -227,6 +227,27 @@ def test_create_tickets_child_invalid():
     assert "INVALID_LINK" in response.json().get("Message") 
 
 
+def test_login_user_ok():
+    payload = {"group_id": group_id}
+    response = requests.post(f"{API_BASE_URL}/login", json=payload)
+    assert response.status_code == 200
+    assert "USER" in response.json().get("Message") 
+
+
+def test_login_admin_ok():
+    payload = {"group_id": MASTER_USER}
+    response = requests.post(f"{API_BASE_URL}/login", json=payload)
+    assert response.status_code == 200
+    assert "ADMIN" in response.json().get("Message") 
+
+
+def test_login_bad():
+    payload = {"group_id": "xxxxxx"}
+    response = requests.post(f"{API_BASE_URL}/login", json=payload)
+    assert response.status_code == 403
+    assert "ACCESS_DENIED" in response.json().get("Message")
+
+
 def test_delete_ticket_linked():
     headers = {"Authorization": group_id}
     response = requests.delete(f"{API_BASE_URL}/ticket?ticket_id={ticket_id_adult}", headers=headers)
