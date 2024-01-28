@@ -1,11 +1,19 @@
 // Login.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import config from './config';
+
 
 const Login = ({ onLogin }) => {
   const [code, setCode] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    document.body.classList.add('login');
+    return () => {
+      document.body.classList.remove('login');
+    };
+  }, []);
 
   const handleLoginApi = async () => {
     try {
@@ -43,7 +51,7 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className='container'>
+    <div className='login-container'>
       <div className='text-center'>
         <img src="/SF-small.png" alt="Stumblefunk" />
         <br/><br/>

@@ -1,7 +1,7 @@
 import React from 'react';
-import config from './config';
 
 const UserView = ({ groupCode }) => {
+
   return (
     <div>
       <h2>User View</h2>
