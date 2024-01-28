@@ -10,25 +10,20 @@ const App = () => {
   const [groupCode, setGroupCode] = useState('');
 
   const handleLogin = (message, code) => {
-    if (message) {
-      setUserType(message.toLowerCase());
+    if (message === 'USER' || message === 'ADMIN') {
+      setUserType(message);
       setGroupCode(code);
     } else {
-      console.error('Invalid message received during login');
+      setUserType('');
+      setGroupCode('');
     }
   };
 
   return (
     <div>
-      {userType === '' ? (
-        <Login onLogin={handleLogin} />
-      ) : userType.toLowerCase() === 'user' ? (
-        <UserView groupCode={groupCode} />
-      ) : userType.toLowerCase() === 'admin' ? (
-        <AdminView groupCode={groupCode} />
-      ) : (
-        <p>Invalid user type</p>
-      )}
+      {userType === '' && <Login onLogin={handleLogin} />}
+      {userType === 'USER' && <UserView groupCode={groupCode} />}
+      {userType === 'ADMIN' && <AdminView groupCode={groupCode} />}
     </div>
   );
 };
