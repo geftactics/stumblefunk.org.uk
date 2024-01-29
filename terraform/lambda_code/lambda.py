@@ -40,6 +40,8 @@ def handler(event, context):
         response = create_ticket(json.loads(event["body"]))
     elif http_method == 'DELETE' and path == '/ticket':
         response = delete_ticket(event["queryStringParameters"].get('ticket_id', None))
+    elif http_method == 'GET' and path == '/tickets':
+        response = get_tickets(event["queryStringParameters"].get('group_id', None))
     elif http_method == 'POST' and path == '/login':
         response = login(json.loads(event["body"]))
     else:
@@ -364,6 +366,24 @@ def delete_ticket(ticket_id):
 
     except:
         logger.exception("ERROR - DELETE_TICKET")
+
+
+def get_tickets(group_id):
+    try:
+        data = {}
+        for ticket_type in ['adult', 'child', 'vehicle']:
+            response = ticket_table.scan(
+                FilterExpression="group_id = :group_id and ticket_type = :ticket_type",
+                ExpressionAttributeValues={
+                    ":group_id": group_id,
+                    ":ticket_type": ticket_type
+                }
+            )
+            data[ticket_type] = response.get('Items', [])
+        return build_response(200, data)
+
+    except:
+        logger.exception("ERROR - GET_TICKETS")
 
 
 def login(request_body):
