@@ -1,6 +1,6 @@
 // AdminView.js
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import config from './config';
 
 const AdminView = ({ groupCode, userType, onAddGroup }) => {
@@ -36,8 +36,26 @@ const AdminView = ({ groupCode, userType, onAddGroup }) => {
     console.log(`Delete group with ID: ${groupId}`);
   };
 
-  const handleNew = () => {
-    navigate('/group-edit');
+  const handleNew = async () => {
+    try {
+      const response = await fetch(`${config.apiUrl}/group`, {
+        method: 'POST',
+        headers: {
+          'Authorization': groupCode,
+          'Content-Type': 'application/json',
+        }
+      });
+  
+      const data = await response.json();
+      if (data.Operation === 'CREATE_GROUP' && data.Message === 'SUCCESS' && data.group_id) {
+        console.log('New group created with ID:', data.group_id);
+        navigate(`/groups/edit/${data.group_id}`);
+      } else {
+        console.error('Failed to create a new group:', data);
+      }
+    } catch (error) {
+      console.error('Error creating a new group:', error);
+    }
   };
 
   return (
@@ -72,9 +90,9 @@ const AdminView = ({ groupCode, userType, onAddGroup }) => {
                 <span className="badge bg-primary">{`? / ${group.child}`}</span>
               </td>
               <td>
-                <a href={`#guid=${group.group_id}`} className="btn btn-sm btn-outline-dark">
-                  <i className="fa fa-edit"></i> Edit
-                </a>
+              <Link to={`/groups/edit/${group.group_id}`} className="btn btn-sm btn-outline-dark">
+                <i className="fa fa-edit"></i> Edit
+              </Link>
                 {' '}
                 <a
                   href={`#guid=${group.group_id}`}
