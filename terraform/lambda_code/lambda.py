@@ -84,8 +84,25 @@ def get_groups():
             while "LastEvaluateKey" in response:
                 response = group_table.scan(ExclusiveStartKey=response["LastEvaluatedKey"])
                 result.extend(response["Items"])
+
+            # get totals used
+            data = []
+            for g in response["Items"]:
+                total = {}
+                for ticket_type in ['adult', 'child', 'vehicle']:
+                    response = ticket_table.scan(
+                        FilterExpression="group_id = :group_id AND ticket_type = :ticket_type",
+                        ExpressionAttributeValues={
+                            ":group_id": g['group_id'],
+                            ":ticket_type": ticket_type
+                        }
+                    )
+                    total[ticket_type] = response.get('Count', 0)
+                    g[ticket_type + '_used'] = total[ticket_type]
+                data.append(g)
+
             body = {
-                "groups": result
+                "groups": data
             }
             return build_response(200, body)
         else:
@@ -106,8 +123,23 @@ def get_group(group_id):
                     "group_id": group_id
                 }
             )
+            
             if "Item" in response:
-                return build_response(200, response["Item"])
+                group = response["Item"]
+                total = {}
+                for ticket_type in ['adult', 'child', 'vehicle']:
+                    response = ticket_table.scan(
+                        FilterExpression="group_id = :group_id AND ticket_type = :ticket_type",
+                        ExpressionAttributeValues={
+                            ":group_id": group_id,
+                            ":ticket_type": ticket_type
+                        }
+                    )
+                    total[ticket_type] = response.get('Count', 0)
+                group['adult_used'] = total['adult']
+                group['child_used'] = total['child']
+                group['vehicle_used'] = total['vehicle']
+                return build_response(200, group)
             else:
                 return build_response(404, {"Message": "group_id: {0}s not found".format(group_id)})
         else:
