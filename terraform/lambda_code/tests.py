@@ -26,40 +26,6 @@ def test_create_group_no_auth():
     assert response.status_code == 403
     assert "ACCESS_DENIED" in response.json().get("Message")
 
-
-def test_get_groups():
-    headers = {"Authorization": MASTER_USER}
-    response = requests.get(f"{API_BASE_URL}/groups", headers=headers)
-    assert response.status_code == 200
-    assert "groups" in response.json()
-
-
-def test_get_groups_no_auth():
-    response = requests.get(f"{API_BASE_URL}/groups")
-    assert response.status_code == 403
-    assert "ACCESS_DENIED" in response.json().get("Message")
-
-
-def test_get_group():
-    headers = {"Authorization": MASTER_USER}
-    response = requests.get(f"{API_BASE_URL}/group?group_id={group_id}", headers=headers)
-    assert response.status_code == 200
-    assert "group_id" in response.json()
-
-
-def test_get_group_no_auth():
-    response = requests.get(f"{API_BASE_URL}/group?group_id={group_id}")
-    assert response.status_code == 403
-    assert "ACCESS_DENIED" in response.json().get("Message")
-
-
-def test_get_group_not_found():
-    headers = {"Authorization": MASTER_USER}
-    response = requests.get(f"{API_BASE_URL}/group?group_id=xxxxxxxx", headers=headers)
-    assert response.status_code == 404
-    assert "not found" in response.json().get("Message")
-
-
 def test_modify_group():
     headers = {"Authorization": MASTER_USER}
     payload = {"group_id": group_id, "group_name": "New Group Name", "adult": 3, "child": 2, "vehicle": 2}
@@ -81,6 +47,59 @@ def test_modify_group_not_found():
     response = requests.patch(f"{API_BASE_URL}/group", json=payload, headers=headers)
     assert response.status_code == 404
     assert "NOT_FOUND" in response.json().get("Message")
+
+
+def test_get_groups():
+    headers = {"Authorization": MASTER_USER}
+    response = requests.get(f"{API_BASE_URL}/groups", headers=headers)
+    json_data = response.json()
+    assert response.status_code == 200
+    assert isinstance(json_data, dict)
+    groups = json_data.get("groups", [])
+    assert isinstance(groups, list) and len(groups) >= 1
+    for group in groups:
+        assert isinstance(group, dict)
+        assert "adult" in group
+        assert "child" in group
+        assert "group_id" in group
+        assert "group_name" in group
+        assert "vehicle" in group
+        assert "adult_used" in group
+        assert "child_used" in group
+        assert "vehicle_used" in group
+
+
+def test_get_groups_no_auth():
+    response = requests.get(f"{API_BASE_URL}/groups")
+    assert response.status_code == 403
+    assert "ACCESS_DENIED" in response.json().get("Message")
+
+
+def test_get_group():
+    headers = {"Authorization": MASTER_USER}
+    response = requests.get(f"{API_BASE_URL}/group?group_id={group_id}", headers=headers)
+    assert response.status_code == 200
+    assert "group_id" in response.json()
+    assert "group_name" in response.json()
+    assert "adult" in response.json()
+    assert "child" in response.json()
+    assert "vehicle" in response.json()
+    assert "adult_used" in response.json()
+    assert "child_used" in response.json()
+    assert "vehicle_used" in response.json()
+
+
+def test_get_group_no_auth():
+    response = requests.get(f"{API_BASE_URL}/group?group_id={group_id}")
+    assert response.status_code == 403
+    assert "ACCESS_DENIED" in response.json().get("Message")
+
+
+def test_get_group_not_found():
+    headers = {"Authorization": MASTER_USER}
+    response = requests.get(f"{API_BASE_URL}/group?group_id=xxxxxxxx", headers=headers)
+    assert response.status_code == 404
+    assert "not found" in response.json().get("Message")
 
 
 def test_create_tickets_adult_missing_data():

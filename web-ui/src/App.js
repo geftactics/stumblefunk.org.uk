@@ -45,7 +45,7 @@ const App = () => {
             <>
               <Route path="/" element={<Groups groupCode={groupCode} userType={userType} />} />
               <Route path="/groups" element={<Groups groupCode={groupCode} userType={userType} />} />
-              <Route path="/groups/edit/:id" element={<GroupEdit />} />
+              <Route path="/groups/edit/:group_id" element={<GroupEdit />} />
             </>
           )}
 

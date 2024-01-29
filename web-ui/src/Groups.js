@@ -81,13 +81,13 @@ const AdminView = ({ groupCode, userType, onAddGroup }) => {
             <tr key={group.group_id}>
               <td>{group.group_name}</td>
               <td>
-                <span className="badge bg-success">{`? / ${group.adult}`}</span>
+                <span className={`badge ${group.adult_used === 0 ? 'bg-secondary' : group.adult == group.adult_used ? 'bg-success' : 'bg-primary'}`}>{`${group.adult_used} / ${group.adult}`}</span>
               </td>
               <td>
-                <span className="badge bg-primary">{`? / ${group.child}`}</span>
+                <span className={`badge ${group.child_used === 0 ? 'bg-secondary' : group.child == group.child_used ? 'bg-success' : 'bg-primary'}`}>{`${group.child_used} / ${group.child}`}</span>
               </td>
               <td>
-                <span className="badge bg-primary">{`? / ${group.child}`}</span>
+                <span className={`badge ${group.vehicle_used === 0 ? 'bg-secondary' : group.vehicle == group.vehicle_used ? 'bg-success' : 'bg-primary'}`}>{`${group.vehicle_used} / ${group.vehicle}`}</span>
               </td>
               <td>
               <Link to={`/groups/edit/${group.group_id}`} className="btn btn-sm btn-outline-dark">
