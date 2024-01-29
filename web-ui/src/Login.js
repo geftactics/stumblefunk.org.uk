@@ -2,11 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import config from './config';
+import { useNavigate } from 'react-router-dom';
 
 
 const Login = ({ onLogin }) => {
   const [code, setCode] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.body.classList.add('login');
@@ -46,6 +48,7 @@ const Login = ({ onLogin }) => {
 
   const handleKeyPress_Login = (e) => {
     if (e.key === 'Enter') {
+      navigate('/');
       handleLoginApi();
     }
   };
@@ -72,7 +75,7 @@ const Login = ({ onLogin }) => {
           autoFocus
         />
         <br/>
-        <button className="btn btn-lg btn-secondary w-100" onClick={handleLoginApi}>
+        <button className="btn btn-lg btn-secondary w-100" onClick={() => { navigate('/'); handleLoginApi(); }}>
           Sign in
         </button>
       </div>

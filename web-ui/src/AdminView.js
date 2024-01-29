@@ -1,9 +1,11 @@
 // AdminView.js
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import config from './config';
 
 const AdminView = ({ groupCode, userType, onAddGroup }) => {
   const [groups, setGroups] = useState([]);
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -34,11 +36,15 @@ const AdminView = ({ groupCode, userType, onAddGroup }) => {
     console.log(`Delete group with ID: ${groupId}`);
   };
 
+  const handleNew = () => {
+    navigate('/group-edit');
+  };
+
   return (
     <div className="container">
       <h2>Group Management</h2>
       <p>
-      <button className="btn btn-sm btn-outline-dark">
+      <button onClick={handleNew} className="btn btn-sm btn-outline-dark">
         <i className="fa fa-plus"></i> Add New Group
       </button>
       </p>

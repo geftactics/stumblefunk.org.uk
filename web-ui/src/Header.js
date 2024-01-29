@@ -1,7 +1,10 @@
 // Navbar.js
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ userType, onLogout }) => {
+  const navigate = useNavigate();
+
   return (
     <nav className="navbar navbar-expand-sm navbar-container">
       <img src="/SF-small.png" alt="logo" />
@@ -10,29 +13,29 @@ const Navbar = ({ userType, onLogout }) => {
           {userType === 'ADMIN' && (
             <>
               <li className="nav-item">
-                <button className="btn btn-secondary" onClick={() => console.log('Option 1')}>
+                <button className="btn btn-secondary" onClick={() => { navigate('/groups'); }}>
                   Groups
                 </button>
               </li>
               <li className="nav-item">
-                <button className="btn btn-secondary" onClick={() => console.log('Option 2')}>
+                <button className="btn btn-secondary" onClick={() => { navigate('/totals'); }}>
                   Totals
                 </button>
               </li>
               <li className="nav-item">
-                <button className="btn btn-secondary" onClick={() => console.log('Option 3')}>
+                <button className="btn btn-secondary" onClick={() => { navigate('/list/tickets'); }}>
                   Ticket List
                 </button>
               </li>
               <li className="nav-item">
-                <button className="btn btn-secondary" onClick={() => console.log('Option 4')}>
+                <button className="btn btn-secondary" onClick={() => { navigate('/list/vehicles'); }}>
                   Vehicle List
                 </button>
               </li>
             </>
           )}
           <li className="nav-item">
-            <button className="btn btn-secondary" onClick={onLogout}>
+            <button className="btn btn-secondary" onClick={() => { navigate('/logout'); onLogout(); }}>
               Logout
             </button>
           </li>
