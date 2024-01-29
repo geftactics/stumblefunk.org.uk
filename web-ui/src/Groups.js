@@ -28,14 +28,6 @@ const AdminView = ({ groupCode, userType, onAddGroup }) => {
     fetchData();
   }, [groupCode]);
 
-  const handleEdit = (groupId) => {
-    console.log(`Edit group with ID: ${groupId}`);
-  };
-
-  const handleDelete = (groupId) => {
-    console.log(`Delete group with ID: ${groupId}`);
-  };
-
   const handleNew = async () => {
     try {
       const response = await fetch(`${config.apiUrl}/group`, {

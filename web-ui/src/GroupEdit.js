@@ -70,12 +70,13 @@ const GroupEdit = () => {
   };
   
 
+  // todo fix selected
   const generateNumberOptions = (type) => {
     const options = [];
     const usedValue = type === 'adult' ? group.adult_used : type === 'child' ? group.child_used : group.vehicle_used;
     for (let i = usedValue; i <= 15; i++) {
       options.push(
-        <option key={i} value={i} selected={i === group[type]}>
+        <option key={i} value={i} selected={i === group[type]}> 
           {i}
         </option>
       );
