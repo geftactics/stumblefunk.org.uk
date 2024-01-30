@@ -30,7 +30,7 @@ const TicketAdult = ({ groupCode }) => {
       });
 
       if (response.ok) {
-        const result = await response.json();
+        await response.json();
         navigate('/');
       } else {
         console.error('Error creating ticket:', response.statusText);

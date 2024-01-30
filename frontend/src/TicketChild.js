@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import config from './config';
 
-const TicketVehicle = ({ groupCode }) => {
+const TicketChild = ({ groupCode }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
     mobile_phone: '',
-    driver_id: '',
-    vehicle_reg: '',
-    vehicle_size: '',
-    vehicle_parking: '',
+    email: '',
+    involvement: '',
+    parent_id: '',
+    child_age: '',
+    child_offsite_contact: '',
+    child_offsite_mobile: '',
   });
-  const [driverData, setDriverData] = useState([]);
+  const [parentData, setParentData] = useState([]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,13 +29,13 @@ const TicketVehicle = ({ groupCode }) => {
         },
         body: JSON.stringify({
           group_id: groupCode,
-          ticket_type: 'vehicle',
+          ticket_type: 'child',
           ...formData,
         }),
       });
 
       if (response.ok) {
-        const result = await response.json();
+        await response.json();
         navigate('/');
       } else {
         console.error('Error creating ticket:', response.statusText);
@@ -48,7 +50,7 @@ const TicketVehicle = ({ groupCode }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const fetchDriverData = async () => {
+  const fetchParentData = async () => {
     try {
       const response = await fetch(`${config.apiUrl}/tickets?group_id=${groupCode}`, {
         headers: {
@@ -59,101 +61,124 @@ const TicketVehicle = ({ groupCode }) => {
       if (response.ok) {
         const responseData = await response.json();
         const adultData = responseData.adult || [];
-        setDriverData(adultData);
+        setParentData(adultData);
       } else {
-        console.error('Error fetching driver data:', response.statusText);
+        console.error('Error fetching parent data:', response.statusText);
       }
     } catch (error) {
-      console.error('Error during driver data fetch:', error);
+      console.error('Error during parent data fetch:', error);
     }
   };
 
   useEffect(() => {
-    fetchDriverData();
+    fetchParentData();
   }, [groupCode]);
 
 
   return (
     <div className="container">
-      <h2>Vehicle Pass</h2>
+      <h2>Child Ticket</h2>
 
       <form className="card-header alert-dark" onSubmit={handleSubmit}>
 
-      <div className="form-group row">
+        <div className="form-group row">
           <div className="form-group col-md-6 col-xs-12">
-            <label htmlFor="driver_id" className="col-form-label">Driver</label>
+            <label htmlFor="first_name">First Name</label>
+            <input
+              className="form-control"
+              type="text"
+              name="first_name"
+              value={formData.first_name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group col-md-6 col-xs-12">
+            <label htmlFor="last_name">Last Name</label>
+            <input
+              className="form-control"
+              type="text"
+              name="last_name"
+              value={formData.last_name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="form-group row">
+          <div className="form-group col-md-6 col-xs-12">
+            <label htmlFor="parent_id" className="col-form-label">Parent</label>
             <select
               className="form-control"
-              name="driver_id"
-              value={formData.driver_id}
+              name="parent_id"
+              value={formData.parent_id}
               onChange={handleChange}
               required
             >
               <option value="">Please select...</option>
-              {driverData.map((driver) => (
-                <option key={driver.ticket_id} value={driver.ticket_id}>
-                  {`${driver.first_name} ${driver.last_name}`}
+              {parentData.map((parent) => (
+                <option key={parent.ticket_id} value={parent.ticket_id}>
+                  {`${parent.first_name} ${parent.last_name}`}
                 </option>
               ))}
             </select>
           </div>
           <div className="form-group col-md-6 col-xs-12">
-            <label htmlFor="vehicle_size" className="col-form-label">Vehicle Size</label>
+            <label htmlFor="child_age" className="col-form-label">Age</label>
             <select
               className="form-control"
-              name="vehicle_size"
-              value={formData.vehicle_size}
+              name="child_age"
+              value={formData.child_age}
               onChange={handleChange}
               required
             >
               <option value="">Please select...</option>
-              <option value="car">Car</option>
-              <option value="van">Van/Camper</option>
-              <option value="truck">Bus/Truck</option>
+              {Array.from({ length: 17 }, (_, index) => index + 1).map((age) => (<option key={age} value={age}>{age}</option>))}
             </select>
           </div>
         </div>
 
         <div className="form-group row">
           <div className="form-group col-md-6 col-xs-12">
-            <label htmlFor="vehicle_reg">Vehicle Registration</label>
+            <label htmlFor="child_offsite_contact">Offsite Contact Name</label>
             <input
               className="form-control"
               type="text"
-              name="vehicle_reg"
-              value={formData.vehicle_reg}
+              name="child_offsite_contact"
+              value={formData.child_offsite_contact}
               onChange={handleChange}
               required
             />
           </div>
           <div className="form-group col-md-6 col-xs-12">
-            <label htmlFor="mobile_phone">Drivers Mobile</label>
+            <label htmlFor="child_offsite_mobile">Offsite Contact Phone</label>
             <input
               className="form-control"
               type="text"
+              name="child_offsite_mobile"
+              pattern="[0-9 ]{11,12}"
+              title="UK mobile number"
+              value={formData.child_offsite_mobile}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="form-group row">
+          <div className="form-group col-md-6 col-xs-12">
+            <label htmlFor="mobile_phone">Parents Mobile Phone</label>
+            <input
+              className="form-control"
+              type="tel"
               name="mobile_phone"
+              pattern="[0-9 ]{11,12}"
+              title="UK mobile number"
               value={formData.mobile_phone}
               onChange={handleChange}
               required
             />
-          </div>
-        </div>
-
-        <div className="form-group row">
-          <div className="form-group col-md-6 col-xs-12">
-            <label htmlFor="vehicle_parking" className="col-form-label">Car Park</label>
-            <select
-              className="form-control"
-              name="vehicle_parking"
-              value={formData.vehicle_parking}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Please select...</option>
-              <option value="carpark">Crew/Artist Carpark</option>
-              <option value="camping">Crew/Artist Camper-van area</option>
-              <option value="onsite">Onsite Access</option>
-            </select>
           </div>
         </div>
 
@@ -175,4 +200,4 @@ const TicketVehicle = ({ groupCode }) => {
 };
 
 
-export default TicketVehicle;
+export default TicketChild;
