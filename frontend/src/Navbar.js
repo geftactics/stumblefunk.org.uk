@@ -22,13 +22,18 @@ const Navbar = ({ userType, onLogout }) => {
                 </button>
               </li>
               <li className="nav-item">
-                <button className="btn btn-secondary" onClick={() => { navigate('/list/tickets'); }}>
-                  Ticket List
+                <button className="btn btn-secondary" onClick={() => { navigate('/list/adult'); }}>
+                  Adults
                 </button>
               </li>
               <li className="nav-item">
-                <button className="btn btn-secondary" onClick={() => { navigate('/list/vehicles'); }}>
-                  Vehicle List
+                <button className="btn btn-secondary" onClick={() => { navigate('/list/child'); }}>
+                  Children
+                </button>
+              </li>
+              <li className="nav-item">
+                <button className="btn btn-secondary" onClick={() => { navigate('/list/vehicle'); }}>
+                   Vehicles
                 </button>
               </li>
             </>

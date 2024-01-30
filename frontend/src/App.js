@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './Login';
-import Header from './Header';
+import Navbar from './Navbar';
 import Groups from './AdminView';
 import UserView from './UserView';
+import Totals from './Totals';
 import GroupEdit from './GroupEdit';
 import TicketAdult from './TicketAdult';
 import TicketChild from './TicketChild';
 import TicketVehicle from './TicketVehicle';
+import ListAdult from './ListAdult';
+import ListChild from './ListChild';
+import ListVehicle from './ListVehicle';
 
 const App = () => {
   const [userType, setUserType] = useState('');
@@ -34,7 +38,7 @@ const App = () => {
     <Router>
       <div>
         
-        {userType !== '' && !window.location.pathname.includes('/logout') && (<Header userType={userType} onLogout={handleLogout} />)}
+        {userType !== '' && !window.location.pathname.includes('/logout') && (<Navbar userType={userType} onLogout={handleLogout} />)}
 
         <Routes>
 
@@ -52,6 +56,10 @@ const App = () => {
               <Route path="/" element={<Groups groupCode={groupCode} userType={userType} onUpdateLogin={handleLogin} />} />
               <Route path="/groups" element={<Groups groupCode={groupCode} userType={userType} onUpdateLogin={handleLogin}/>} />
               <Route path="/groups/edit/:group_id" element={<GroupEdit groupCode={groupCode} />} />
+              <Route path="/list/adult" element={<ListAdult groupCode={groupCode} />} />
+              <Route path="/list/child" element={<ListChild groupCode={groupCode} />} />
+              <Route path="/list/vehicle" element={<ListVehicle groupCode={groupCode} />} />
+              <Route path="/totals" element={<Totals groupCode={groupCode} />} />
             </>
           )}
 

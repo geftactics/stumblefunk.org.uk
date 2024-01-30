@@ -2,9 +2,11 @@
 
 My first ever attempt at React, after never having used it before. Don't judge ;)
 
+
 TODO:
-- ddb-scan pagination
-- make data calls before render
+- Totals
+- Ticket List
+- Vehicle List
 
 
 In the project directory, you can run:
