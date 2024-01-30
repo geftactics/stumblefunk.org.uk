@@ -99,13 +99,13 @@ const AdminView = ({ groupCode, onUpdateLogin }) => {
             <tr key={group.group_id}>
               <td>{group.group_name}</td>
               <td>
-                <span className={`badge text-light ${group.adult_used === 0 ? 'bg-secondary' : group.adult == group.adult_used ? 'bg-success' : 'bg-primary'}`}>{group.adult_used} / {group.adult}</span>
+                <span className={`badge text-light ${group.adult_used === 0 ? 'bg-secondary' : parseInt(group.adult) === parseInt(group.adult_used) ? 'bg-success' : 'bg-primary'}`}>{group.adult_used} / {group.adult}</span>
               </td>
               <td>
-                <span className={`badge text-light ${group.child_used === 0 ? 'bg-secondary' : group.child == group.child_used ? 'bg-success' : 'bg-primary'}`}>{group.child_used} / {group.child}</span>
+                <span className={`badge text-light ${group.child_used === 0 ? 'bg-secondary' : parseInt(group.child) === parseInt(group.child_used) ? 'bg-success' : 'bg-primary'}`}>{group.child_used} / {group.child}</span>
               </td>
               <td>
-                <span className={`badge text-light ${group.vehicle_used === 0 ? 'bg-secondary' : group.vehicle == group.vehicle_used ? 'bg-success' : 'bg-primary'}`}>{group.vehicle_used} / {group.vehicle}</span>
+                <span className={`badge text-light ${group.vehicle_used === 0 ? 'bg-secondary' : parseInt(group.vehicle) === parseInt(group.vehicle_used) ? 'bg-success' : 'bg-primary'}`}>{group.vehicle_used} / {group.vehicle}</span>
               </td>
               <td>
                 <Link to={`/groups/edit/${group.group_id}`} className="btn btn-sm btn-outline-dark">
