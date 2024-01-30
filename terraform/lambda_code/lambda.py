@@ -8,6 +8,7 @@ from datetime import datetime, date
 
 close_date = "2024-02-26"
 
+
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 dynamodb = boto3.resource("dynamodb")
@@ -294,7 +295,7 @@ def create_ticket(request_body):
                     "last_name": request_body.get('last_name'),
                     "involvement": request_body.get('involvement'),
                     "email": request_body.get('email'),
-                    "mobile_phone": request_body.get('mobile_phone'),
+                    "mobile_phone": request_body.get('mobile_phone').replace(" ", ""),
                 }
         elif ticket_type == 'child':
             item={
@@ -306,8 +307,8 @@ def create_ticket(request_body):
                     "parent_id": request_body.get('parent_id'),
                     "child_age": request_body.get('child_age'),
                     "child_offsite_contact": request_body.get('child_offsite_contact'),
-                    "child_offsite_mobile": request_body.get('child_offsite_mobile'),
-                    "mobile_phone": request_body.get('mobile_phone'),
+                    "child_offsite_mobile": request_body.get('child_offsite_mobile').replace(" ", ""),
+                    "mobile_phone": request_body.get('mobile_phone').replace(" ", ""),
                 }
         elif ticket_type == 'vehicle':
             item={
@@ -315,8 +316,8 @@ def create_ticket(request_body):
                     "ticket_type": ticket_type,
                     "group_id": group_id,
                     "driver_id": request_body.get('driver_id'),
-                    "mobile_phone": request_body.get('mobile_phone'),
-                    "vehicle_reg": request_body.get('vehicle_reg'),
+                    "mobile_phone": request_body.get('mobile_phone').replace(" ", ""),
+                    "vehicle_reg": request_body.get('vehicle_reg').replace(" ", ""),
                     "vehicle_size": request_body.get('vehicle_size'),
                     "vehicle_parking": request_body.get('vehicle_parking'),
                 }
@@ -450,8 +451,6 @@ def login(request_body):
         logger.exception("ERROR - MODIFY GROUP")
 
 
-# TODO: get tickets (all for group_id)
-# TODO: get totals (admin only)
         
 def build_response(statusCode, body=None):
     response = {

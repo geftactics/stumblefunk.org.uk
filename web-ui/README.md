@@ -1,5 +1,12 @@
 # Web-UI
 
+My first ever attempt at React, after never having used it before. Don't judge ;)
+
+TODO:
+- ddb-scan pagination
+- make data calls before render
+
+
 In the project directory, you can run:
 
 ### `npm start`

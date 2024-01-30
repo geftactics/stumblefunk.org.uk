@@ -217,7 +217,6 @@ resource "aws_api_gateway_integration" "login_post_integration" {
   uri                     = aws_lambda_function.accreditation.invoke_arn
 }
 
-
 // ---- CORS ------------------------------------------------------
 
 module "cors_health" {

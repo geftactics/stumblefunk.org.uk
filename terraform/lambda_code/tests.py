@@ -11,6 +11,7 @@ def test_health_check():
     response = requests.get(f"{API_BASE_URL}/health")
     assert response.status_code == 200
 
+
 def test_create_group():
     headers = {"Authorization": MASTER_USER}
     response = requests.post(f"{API_BASE_URL}/group", headers=headers)
@@ -251,7 +252,6 @@ def test_get_tickets():
     assert "adult" in response.json()
     assert "child" in response.json()
     assert "vehicle" in response.json()
-    # TODO check eixsting ticket present
 
 
 def test_login_user_ok():
@@ -341,6 +341,3 @@ def test_delete_group():
     response = requests.delete(f"{API_BASE_URL}/group?group_id={group_id}", headers=headers)
     assert response.status_code == 200
     assert response.json()["deltedItem"] != ""
-
-
-# tickets.get

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import config from './config';
 
-const GroupEdit = () => {
+const GroupEdit = (groupCode) => {
   const navigate = useNavigate();
   const { group_id } = useParams();
   const [group, setGroup] = useState({
@@ -39,14 +39,16 @@ const GroupEdit = () => {
     setGroup((prevGroup) => ({ ...prevGroup, [name]: value }));
   };
 
+  const saveGroup = (e) => {
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
     try {
-      const response = await fetch(`${config.apiUrl}/groups`, {
+      const response = await fetch(`${config.apiUrl}/group`, {
         method: 'PATCH',
         headers: {
-          'Authorization': group_id,
+          'Authorization': groupCode.groupCode,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -59,7 +61,6 @@ const GroupEdit = () => {
       });
   
       if (response.ok) {
-        console.log('Group updated successfully');
         navigate('/groups');
       } else {
         console.error('Failed to update group');
@@ -69,16 +70,12 @@ const GroupEdit = () => {
     }
   };
   
-
-  // todo fix selected
   const generateNumberOptions = (type) => {
     const options = [];
     const usedValue = type === 'adult' ? group.adult_used : type === 'child' ? group.child_used : group.vehicle_used;
     for (let i = usedValue; i <= 15; i++) {
       options.push(
-        <option key={i} value={i} selected={i === group[type]}> 
-          {i}
-        </option>
+        <option key={i} value={i}>{i}</option>
       );
     }
     return options;
@@ -87,7 +84,7 @@ const GroupEdit = () => {
   return (
     <div className="container">
       <h2>Edit Group</h2>
-      <p>Access Code: <span className="badge bg-secondary">{group.group_id}</span></p>
+      <p>Access Code: <span className="badge text-light bg-secondary">{group.group_id}</span></p>
 
       <form className="alert alert-dark" method="POST" onSubmit={handleSubmit}>
 
@@ -99,20 +96,20 @@ const GroupEdit = () => {
 
         <div className="form-group row">
           <div className="form-group col-4">
-            <label htmlFor="adults" className="col-form-label">Adults</label>
-            <select className="form-control" name="adults" onChange={handleInputChange}>
+            <label htmlFor="adult" className="col-form-label">Adults</label>
+            <select className="form-control" name="adult" value={group.adult} onChange={handleInputChange}>
               {generateNumberOptions('adult')}
             </select>
           </div>
           <div className="form-group col-4">
-            <label htmlFor="children" className="col-form-label">Children</label>
-            <select className="form-control" name="children" onChange={handleInputChange}>
+            <label htmlFor="child" className="col-form-label">Children</label>
+            <select className="form-control" name="child" value={group.child} onChange={handleInputChange}>
               {generateNumberOptions('child')}
             </select>
           </div>
           <div className="form-group col-4">
-            <label htmlFor="vehicles" className="col-form-label">Vehicles</label>
-            <select className="form-control" name="vehicles" onChange={handleInputChange}>
+            <label htmlFor="vehicle" className="col-form-label">Vehicles</label>
+            <select className="form-control" name="vehicle" value={group.vehicle} onChange={handleInputChange}>
               {generateNumberOptions('vehicle')}
             </select>
           </div>
@@ -125,7 +122,7 @@ const GroupEdit = () => {
             </button>
           </div>
           <div className="form-group col-6 text-right">
-            <button type="submit" className="btn btn-sm btn-outline-dark"><i className="fa fa-edit"></i> Save</button>
+            <button className="btn btn-sm btn-outline-dark" onClick={saveGroup}><i className="fa fa-edit"></i> Save</button>
           </div>
         </div>
 

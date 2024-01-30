@@ -1,12 +1,10 @@
-// AdminView.js
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import config from './config';
 
-const AdminView = ({ groupCode, userType, onAddGroup }) => {
+const AdminView = ({ groupCode, onUpdateLogin }) => {
   const [groups, setGroups] = useState([]);
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +35,7 @@ const AdminView = ({ groupCode, userType, onAddGroup }) => {
           'Content-Type': 'application/json',
         }
       });
-  
+
       const data = await response.json();
       if (data.Operation === 'CREATE_GROUP' && data.Message === 'SUCCESS' && data.group_id) {
         console.log('New group created with ID:', data.group_id);
@@ -50,13 +48,41 @@ const AdminView = ({ groupCode, userType, onAddGroup }) => {
     }
   };
 
+  const handleDelete = async (groupId) => {
+    if (window.confirm('This will remove the group and any tickets that have been created by the group! Are you sure?')) {
+      try {
+        const response = await fetch(`${config.apiUrl}/group?group_id=${groupId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': groupCode,
+          },
+        });
+
+        if (response.ok) {
+          console.log(`Group with ID ${groupId} deleted successfully`);
+          const updatedGroups = groups.filter((group) => group.group_id !== groupId);
+          setGroups(updatedGroups);
+        } else {
+          console.error('Error deleting group:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error during group deletion:', error);
+      }
+    }
+  };
+
+  const handleLoginSwitch = (newGroupCode) => {
+    onUpdateLogin('USER', newGroupCode);
+    navigate('/')
+  };
+
   return (
     <div className="container">
       <h2>Group Management</h2>
       <p>
-      <button onClick={handleNew} className="btn btn-sm btn-outline-dark">
-        <i className="fa fa-plus"></i> Add New Group
-      </button>
+        <button onClick={handleNew} className="btn btn-sm btn-outline-dark">
+          <i className="fa fa-plus"></i> Add New Group
+        </button>
       </p>
       <table className="table table-striped">
         <thead>
@@ -73,30 +99,32 @@ const AdminView = ({ groupCode, userType, onAddGroup }) => {
             <tr key={group.group_id}>
               <td>{group.group_name}</td>
               <td>
-                <span className={`badge ${group.adult_used === 0 ? 'bg-secondary' : group.adult == group.adult_used ? 'bg-success' : 'bg-primary'}`}>{`${group.adult_used} / ${group.adult}`}</span>
+                <span className={`badge text-light ${group.adult_used === 0 ? 'bg-secondary' : group.adult == group.adult_used ? 'bg-success' : 'bg-primary'}`}>{group.adult_used} / {group.adult}</span>
               </td>
               <td>
-                <span className={`badge ${group.child_used === 0 ? 'bg-secondary' : group.child == group.child_used ? 'bg-success' : 'bg-primary'}`}>{`${group.child_used} / ${group.child}`}</span>
+                <span className={`badge text-light ${group.child_used === 0 ? 'bg-secondary' : group.child == group.child_used ? 'bg-success' : 'bg-primary'}`}>{group.child_used} / {group.child}</span>
               </td>
               <td>
-                <span className={`badge ${group.vehicle_used === 0 ? 'bg-secondary' : group.vehicle == group.vehicle_used ? 'bg-success' : 'bg-primary'}`}>{`${group.vehicle_used} / ${group.vehicle}`}</span>
+                <span className={`badge text-light ${group.vehicle_used === 0 ? 'bg-secondary' : group.vehicle == group.vehicle_used ? 'bg-success' : 'bg-primary'}`}>{group.vehicle_used} / {group.vehicle}</span>
               </td>
               <td>
-              <Link to={`/groups/edit/${group.group_id}`} className="btn btn-sm btn-outline-dark">
-                <i className="fa fa-edit"></i> Edit
-              </Link>
+                <Link to={`/groups/edit/${group.group_id}`} className="btn btn-sm btn-outline-dark">
+                  <i className="fa fa-edit"></i> Edit
+                </Link>
                 {' '}
-                <a
-                  href={`#guid=${group.group_id}`}
+                <button
                   className="btn btn-sm btn-outline-dark"
-                  onClick={() => window.confirm('This will remove the group and any tickets that have been created by the group! Are you sure?')}
+                  onClick={() => handleDelete(group.group_id)}
                 >
                   <i className="fa fa-trash"></i> Delete
-                </a>
+                </button>
                 {' '}
-                <a href={`#guid=${group.group_id}`} className="btn btn-sm btn-outline-dark">
-                  <i className="fa fa-user"></i> Login
-                </a>
+                <button
+                className="btn btn-sm btn-outline-dark"
+                onClick={() => handleLoginSwitch(group.group_id)}
+              >
+                <i className="fa fa-user"></i> Login
+              </button>
               </td>
             </tr>
           ))}
