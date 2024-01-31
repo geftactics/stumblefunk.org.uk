@@ -12,9 +12,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-    
-    - name: Change working directory
-      run: cd frontend
 
     - name: Use Node.js LTS
       uses: actions/setup-node@v3
@@ -22,7 +19,9 @@ jobs:
         node-version: 'lts/*'
 
     - name: Install dependencies
-      run: pwd && npm install
+      working-directory: frontend
+      run: pwd && npm ci
 
     - name: Build React app
+      working-directory: frontend
       run: npm run build
