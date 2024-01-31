@@ -51,11 +51,11 @@ jobs:
         aws-region: eu-west-1
 
     - name: Terragrunt
-        uses: gruntwork-io/terragrunt-action@v2
-        with:
-          tf_version: ${{ env.terraform_version }}
-          tg_version: ${{ env.terragrunt_version }}
-          tg_dir: environments/dev
-          tg_command: 'apply'
+      uses: gruntwork-io/terragrunt-action@v2
+      with:
+        tf_version: ${{ env.terraform_version }}
+        tg_version: ${{ env.terragrunt_version }}
+        tg_dir: environments/dev
+        tg_command: 'apply'
   
   
