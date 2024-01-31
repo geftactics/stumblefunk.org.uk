@@ -1,4 +1,4 @@
-name: Build React App
+name: Build and Deploy
 
 on:
   push:
@@ -6,8 +6,12 @@ on:
       - master
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        environment: ['dev', 'prod']
 
     steps:
     - name: Checkout repository
@@ -19,9 +23,20 @@ jobs:
         node-version: 'lts/*'
 
     - name: Install dependencies
+      run: npm ci
       working-directory: frontend
-      run: npm install
 
     - name: Build React app
-      working-directory: frontend
       run: npm run build
+      working-directory: frontend
+
+    - name: Set environment variable for deployment
+      run: echo "TF_VAR_environment=${{ matrix.environment }}" >> $GITHUB_ENV
+
+    - name: Run Terragrunt
+      run: terragrunt apply -auto-approve
+      working-directory: environments/${{ matrix.environment }}
+
+    - name: Manual approval for production deployment
+      if: ${{ matrix.environment == 'prod' }}
+      run: echo "Approve the production deployment"
