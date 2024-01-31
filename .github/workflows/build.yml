@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build & Deploy
 
 on:
   push:
@@ -6,12 +6,9 @@ on:
       - master
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        environment: ['dev', 'prod']
+  build:
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
@@ -23,20 +20,30 @@ jobs:
         node-version: 'lts/*'
 
     - name: Install dependencies
-      run: npm ci
       working-directory: frontend
+      run: npm ci
 
     - name: Build React app
-      run: npm run build
       working-directory: frontend
+      run: npm run build
 
-    - name: Set environment variable for deployment
-      run: echo "TF_VAR_environment=${{ matrix.environment }}" >> $GITHUB_ENV
+
+  deploy-dev:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install Terragrunt
+      run: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.54.22/terragrunt_linux_amd64 -O /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
+
+    - name: Set environment variable for dev deployment
+      run: echo "TF_VAR_environment=dev" >> $GITHUB_ENV
 
     - name: Run Terragrunt
       run: terragrunt apply -auto-approve
-      working-directory: environments/${{ matrix.environment }}
-
-    - name: Manual approval for production deployment
-      if: ${{ matrix.environment == 'prod' }}
-      run: echo "Approve the production deployment"
+      working-directory: environments/dev
+  
+  
