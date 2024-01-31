@@ -9,9 +9,8 @@ import GroupEdit from './GroupEdit';
 import TicketAdult from './TicketAdult';
 import TicketChild from './TicketChild';
 import TicketVehicle from './TicketVehicle';
-import ListAdult from './ListAdult';
-import ListChild from './ListChild';
-import ListVehicle from './ListVehicle';
+import ListTickets from './ListTickets';
+
 
 const App = () => {
   const [userType, setUserType] = useState('');
@@ -56,9 +55,9 @@ const App = () => {
               <Route path="/" element={<Groups groupCode={groupCode} userType={userType} onUpdateLogin={handleLogin} />} />
               <Route path="/groups" element={<Groups groupCode={groupCode} userType={userType} onUpdateLogin={handleLogin}/>} />
               <Route path="/groups/edit/:group_id" element={<GroupEdit groupCode={groupCode} />} />
-              <Route path="/list/adult" element={<ListAdult groupCode={groupCode} />} />
-              <Route path="/list/child" element={<ListChild groupCode={groupCode} />} />
-              <Route path="/list/vehicle" element={<ListVehicle groupCode={groupCode} />} />
+              <Route path="/list/adult" element={<ListTickets ticketType='adult' groupCode={groupCode} />} />
+              <Route path="/list/child" element={<ListTickets ticketType='child' groupCode={groupCode} />} />
+              <Route path="/list/vehicle" element={<ListTickets ticketType='vehicle' groupCode={groupCode} />} />
               <Route path="/totals" element={<Totals groupCode={groupCode} />} />
             </>
           )}
