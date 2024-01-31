@@ -70,5 +70,7 @@ jobs:
         path: accreditation
   
     - name: Copy to S3
-      run: pwd && ls -la && aws s3 sync accreditation s3://stumblefunk-www-dev/accreditation
-  
+      run: aws s3 sync accreditation s3://stumblefunk-www-dev/accreditation
+
+    - name: Load env config
+      run: aws s3 cp s3://stumblefunk-www-dev/accreditation/config.js.env s3://stumblefunk-www-dev/accreditation/config.js
