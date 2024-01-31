@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import config from './config';
 
 const AdminView = ({ groupCode, onUpdateLogin }) => {
   const [groups, setGroups] = useState([]);
@@ -9,7 +8,7 @@ const AdminView = ({ groupCode, onUpdateLogin }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${config.apiUrl}/groups`, {
+        const response = await fetch(`${window.config.apiUrl}/groups`, {
           headers: {
             'Authorization': groupCode,
             'Content-Type': 'application/json',
@@ -28,7 +27,7 @@ const AdminView = ({ groupCode, onUpdateLogin }) => {
 
   const handleNew = async () => {
     try {
-      const response = await fetch(`${config.apiUrl}/group`, {
+      const response = await fetch(`${window.config.apiUrl}/group`, {
         method: 'POST',
         headers: {
           'Authorization': groupCode,
@@ -51,7 +50,7 @@ const AdminView = ({ groupCode, onUpdateLogin }) => {
   const handleDelete = async (groupId) => {
     if (window.confirm('This will remove the group and any tickets that have been created by the group! Are you sure?')) {
       try {
-        const response = await fetch(`${config.apiUrl}/group?group_id=${groupId}`, {
+        const response = await fetch(`${window.config.apiUrl}/group?group_id=${groupId}`, {
           method: 'DELETE',
           headers: {
             'Authorization': groupCode,

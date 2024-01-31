@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import config from './config';
 
 const TicketVehicle = ({ groupCode }) => {
   const navigate = useNavigate();
@@ -19,7 +18,7 @@ const TicketVehicle = ({ groupCode }) => {
     event.preventDefault();
 
     try {
-      const response = await fetch(`${config.apiUrl}/ticket`, {
+      const response = await fetch(`${window.config.apiUrl}/ticket`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +49,7 @@ const TicketVehicle = ({ groupCode }) => {
 
   const fetchDriverData = async () => {
     try {
-      const response = await fetch(`${config.apiUrl}/tickets?group_id=${groupCode}`, {
+      const response = await fetch(`${window.config.apiUrl}/tickets?group_id=${groupCode}`, {
         headers: {
           'Authorization': groupCode,
         },

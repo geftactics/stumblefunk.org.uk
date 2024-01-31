@@ -2,6 +2,7 @@
 *.tgz
 .*.sw?
 .idea
+.env
 terragrunt.iml
 vendor
 .terraform

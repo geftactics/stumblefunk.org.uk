@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import config from './config';
 
 const ListTickets = ({ groupCode, ticketType }) => {
   const [groups, setGroups] = useState([]);
@@ -10,7 +9,7 @@ const ListTickets = ({ groupCode, ticketType }) => {
   useEffect(() => {
     const fetchGroupsData = async () => {
       try {
-        const response = await fetch(`${config.apiUrl}/groups`, {
+        const response = await fetch(`${window.config.apiUrl}/groups`, {
           headers: {
             'Authorization': groupCode,
           },
@@ -34,7 +33,7 @@ const ListTickets = ({ groupCode, ticketType }) => {
     const fetchDataForGroups = async () => {
       for (const group of groups) {
         try {
-          const ticketsResponse = await fetch(`${config.apiUrl}/tickets?group_id=${group.group_id}`, {
+          const ticketsResponse = await fetch(`${window.config.apiUrl}/tickets?group_id=${group.group_id}`, {
             headers: {
               'Authorization': groupCode,
             },

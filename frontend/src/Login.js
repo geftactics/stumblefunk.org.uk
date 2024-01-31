@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import config from './config';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -17,7 +16,7 @@ const Login = ({ onLogin }) => {
 
   const handleLoginApi = async () => {
     try {
-      const response = await fetch(`${config.apiUrl}/login`, {
+      const response = await fetch(`${window.config.apiUrl}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

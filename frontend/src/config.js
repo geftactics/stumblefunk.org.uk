@@ -1,5 +1,12 @@
-const config = {
-    apiUrl: 'https://nf2c6o0vt2.execute-api.eu-west-1.amazonaws.com/dev',
-  };
-  
-  export default config;
+async function config() {
+  try {
+    const response = await fetch('config.json');
+    const config = await response.json();
+    return config;
+  } catch (error) {
+    console.error('Error fetching config:', error);
+    throw error; 
+  }
+}
+
+export default config;

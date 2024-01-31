@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import config from './config';
 
 const UserView = ({ groupCode }) => {
   const [groupInfo, setGroupInfo] = useState({
@@ -22,7 +21,7 @@ const UserView = ({ groupCode }) => {
   const fetchData = async () => {
     try {
       // Make API call to fetch ticket data
-      const ticketResponse = await fetch(`${config.apiUrl}/tickets?group_id=${groupCode}`, {
+      const ticketResponse = await fetch(`${window.config.apiUrl}/tickets?group_id=${groupCode}`, {
         headers: {
           'Authorization': groupCode,
         },
@@ -31,7 +30,7 @@ const UserView = ({ groupCode }) => {
       setTickets(ticketData);
 
       // Make additional API call to fetch group info
-      const groupResponse = await fetch(`${config.apiUrl}/group?group_id=${groupCode}`, {
+      const groupResponse = await fetch(`${window.config.apiUrl}/group?group_id=${groupCode}`, {
         headers: {
           'Authorization': groupCode,
         },
@@ -52,7 +51,7 @@ const UserView = ({ groupCode }) => {
 
   const handleRemoveTicket = async (ticketId) => {
     try {
-      const response = await fetch(`${config.apiUrl}/ticket?ticket_id=${ticketId}`, {
+      const response = await fetch(`$window.config.apiUrl}/ticket?ticket_id=${ticketId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': groupCode,

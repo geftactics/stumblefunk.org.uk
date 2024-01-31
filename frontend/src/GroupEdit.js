@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import config from './config';
 
 const GroupEdit = (groupCode) => {
   const navigate = useNavigate();
@@ -19,7 +18,7 @@ const GroupEdit = (groupCode) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${config.apiUrl}/group?group_id=${group_id}`, {
+        const response = await fetch(`${window.config.apiUrl}/group?group_id=${group_id}`, {
           headers: {
             'Authorization': group_id,
           },
@@ -45,7 +44,7 @@ const GroupEdit = (groupCode) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${config.apiUrl}/group`, {
+      const response = await fetch(`${window.config.apiUrl}/group`, {
         method: 'PATCH',
         headers: {
           'Authorization': groupCode.groupCode,

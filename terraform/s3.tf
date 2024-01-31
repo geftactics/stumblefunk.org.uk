@@ -43,3 +43,11 @@ resource "aws_s3_object" "this" {
   etag         = filemd5("${path.module}/public_html/${each.value}")
   content_type = lookup(local.mime_types, regex("\\.[^.]+$", each.value), null)
 }
+
+
+resource "aws_s3_object" "env" {
+  bucket       = aws_s3_bucket.www.bucket
+  key          = "accreditation/config.js.env"
+  content      = "var config = { apiUrl: '${aws_api_gateway_deployment.this.invoke_url}' }"
+  content_type = "application/javascript"
+}

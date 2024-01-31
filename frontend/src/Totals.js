@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import config from './config';
 
 const Totals = ({ groupCode }) => {
   const [totalsData, setTotalsData] = useState({});
@@ -7,7 +6,7 @@ const Totals = ({ groupCode }) => {
   useEffect(() => {
     const fetchTotalsData = async () => {
       try {
-        const response = await fetch(`${config.apiUrl}/groups?`, {
+        const response = await fetch(`${window.config.apiUrl}/groups?`, {
           headers: {
             'Authorization': groupCode,
           },
