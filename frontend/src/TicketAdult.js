@@ -31,7 +31,7 @@ const TicketAdult = ({ groupCode }) => {
 
       if (response.ok) {
         await response.json();
-        navigate('/');
+        navigate('/accreditation/');
       } else {
         console.error('Error creating ticket:', response.statusText);
       }
@@ -127,7 +127,7 @@ const TicketAdult = ({ groupCode }) => {
 
         <div className="form-group row">
           <div className="form-group col-6">
-            <button className="btn btn-sm btn-outline-dark" onClick={() => { navigate('/'); }}>
+            <button className="btn btn-sm btn-outline-dark" onClick={() => { navigate('/accreditation/'); }}>
               <i className="fa fa-mail-reply"></i> Back
             </button>
           </div>

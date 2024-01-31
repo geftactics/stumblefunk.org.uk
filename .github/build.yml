@@ -1,0 +1,26 @@
+name: Build React App
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - name: Change working directory
+      run: cd frontend
+
+    - name: Set up Node from .nvmrc
+      run: nvm install
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build React app
+      run: npm run build

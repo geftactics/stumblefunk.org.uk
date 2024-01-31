@@ -46,7 +46,7 @@ const Login = ({ onLogin }) => {
 
   const handleKeyPress_Login = (e) => {
     if (e.key === 'Enter') {
-      navigate('/');
+      navigate('/accreditation');
       handleLoginApi();
     }
   };
@@ -54,12 +54,12 @@ const Login = ({ onLogin }) => {
   return (
     <div className='login-container'>
       <div className='text-center'>
-        <img src="/SF-small.png" alt="Stumblefunk" />
+        <img src="SF-small.png" alt="Stumblefunk" />
         <br/><br/>
       </div>
       <div className='form-signin'>
         <h5 className='form-signin-heading' style={{ color: errorMessage ? '#ff6a58' : '#ffffff' }}>
-          {errorMessage || 'Please sign in (a21d54e2)'}
+          {errorMessage || 'Please sign in'}
         </h5>
         <input
           type="password"
@@ -73,7 +73,7 @@ const Login = ({ onLogin }) => {
           autoFocus
         />
         <br/>
-        <button className="btn btn-lg btn-secondary w-100" onClick={() => { navigate('/'); handleLoginApi(); }}>
+        <button className="btn btn-lg btn-secondary w-100" onClick={() => { navigate('/accreditation'); handleLoginApi(); }}>
           Sign in
         </button>
       </div>

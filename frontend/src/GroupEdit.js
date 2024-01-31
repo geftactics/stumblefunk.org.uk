@@ -61,7 +61,7 @@ const GroupEdit = (groupCode) => {
       });
   
       if (response.ok) {
-        navigate('/groups');
+        navigate('/accreditation/groups');
       } else {
         console.error('Failed to update group');
       }
@@ -117,7 +117,7 @@ const GroupEdit = (groupCode) => {
 
         <div className="form-group row">
           <div className="form-group col-6">
-            <button className="btn btn-sm btn-outline-dark" onClick={() => { navigate('/groups'); }}>
+            <button className="btn btn-sm btn-outline-dark" onClick={() => { navigate('/accreditation/groups'); }}>
               <i className="fa fa-mail-reply"></i> Back
             </button>
           </div>

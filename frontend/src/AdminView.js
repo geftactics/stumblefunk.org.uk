@@ -39,7 +39,7 @@ const AdminView = ({ groupCode, onUpdateLogin }) => {
       const data = await response.json();
       if (data.Operation === 'CREATE_GROUP' && data.Message === 'SUCCESS' && data.group_id) {
         console.log('New group created with ID:', data.group_id);
-        navigate(`/groups/edit/${data.group_id}`);
+        navigate(`/accreditation/groups/edit/${data.group_id}`);
       } else {
         console.error('Failed to create a new group:', data);
       }
@@ -73,7 +73,7 @@ const AdminView = ({ groupCode, onUpdateLogin }) => {
 
   const handleLoginSwitch = (newGroupCode) => {
     onUpdateLogin('USER', newGroupCode);
-    navigate('/')
+    navigate('/accreditation/')
   };
 
   return (

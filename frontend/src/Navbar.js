@@ -6,40 +6,40 @@ const Navbar = ({ userType, onLogout }) => {
 
   return (
     <nav className="navbar navbar-expand-sm navbar-container">
-      <img src="/SF-small.png" alt="logo" />
+      <img src="SF-small.png" alt="logo" />
       <div className="navbar-collapse justify-content-end">
         <ul className="navbar-nav">
           {userType === 'ADMIN' && (
             <>
               <li className="nav-item">
-                <button className="btn btn-secondary" onClick={() => { navigate('/groups'); }}>
+                <button className="btn btn-secondary" onClick={() => { navigate('/accreditation/groups'); }}>
                   Groups
                 </button>
               </li>
               <li className="nav-item">
-                <button className="btn btn-secondary" onClick={() => { navigate('/totals'); }}>
+                <button className="btn btn-secondary" onClick={() => { navigate('/accreditation/totals'); }}>
                   Totals
                 </button>
               </li>
               <li className="nav-item">
-                <button className="btn btn-secondary" onClick={() => { navigate('/list/adult'); }}>
+                <button className="btn btn-secondary" onClick={() => { navigate('/accreditation/list/adult'); }}>
                   Adults
                 </button>
               </li>
               <li className="nav-item">
-                <button className="btn btn-secondary" onClick={() => { navigate('/list/child'); }}>
+                <button className="btn btn-secondary" onClick={() => { navigate('/accreditation/list/child'); }}>
                   Children
                 </button>
               </li>
               <li className="nav-item">
-                <button className="btn btn-secondary" onClick={() => { navigate('/list/vehicle'); }}>
+                <button className="btn btn-secondary" onClick={() => { navigate('/accreditation/list/vehicle'); }}>
                    Vehicles
                 </button>
               </li>
             </>
           )}
           <li className="nav-item">
-            <button className="btn btn-secondary" onClick={() => { navigate('/logout'); onLogout(); }}>
+            <button className="btn btn-secondary" onClick={() => { navigate('/accreditation/logout'); onLogout(); }}>
               Logout
             </button>
           </li>
