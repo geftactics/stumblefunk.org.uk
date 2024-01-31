@@ -1,10 +1,10 @@
-# Web-UI
+# Stumblefunk accreditation frontend
 
 My first ever attempt at React. Never touched it before this, so don't judge ;)
 
 
 
-In the project directory, you can run:
+
 
 ### `npm start`
 
