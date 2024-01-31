@@ -1,5 +1,9 @@
 name: Build & Deploy
 
+env:
+  terraform_version: '1.6.2'
+  terragrunt_version: '0.54.22'
+
 on:
   push:
     branches:
@@ -14,10 +18,11 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Use Node.js LTS
-      uses: actions/setup-node@v3
+    - name: Get nodejs version
+      working-directory: frontend
+      uses: actions/setup-node@v4
       with:
-        node-version: 'lts/*'
+        node-version-file: '.nvmrc'
 
     - name: Install dependencies
       working-directory: frontend
@@ -39,20 +44,18 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Install Terragrunt
-      run: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.54.22/terragrunt_linux_amd64 -O /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
-
-    - name: Set environment variable for dev deployment
-      run: echo "TF_VAR_environment=dev" >> $GITHUB_ENV
-
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
         role-to-assume: arn:aws:iam::603042156394:role/_github_actions
         aws-region: eu-west-1
 
-    - name: Run Terragrunt
-      run: terragrunt apply -auto-approve
-      working-directory: environments/dev
+    - name: Terragrunt
+        uses: gruntwork-io/terragrunt-action@v2
+        with:
+          tf_version: ${{ env.terraform_version }}
+          tg_version: ${{ env.terragrunt_version }}
+          tg_dir: environments/dev
+          tg_command: 'apply'
   
   
