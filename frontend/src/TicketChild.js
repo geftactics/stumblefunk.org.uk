@@ -72,6 +72,7 @@ const TicketChild = ({ groupCode }) => {
 
   useEffect(() => {
     fetchParentData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [groupCode]);
 
 

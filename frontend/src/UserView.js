@@ -47,6 +47,7 @@ const UserView = ({ groupCode }) => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [groupCode]);
 
   const handleRemoveTicket = async (ticketId) => {

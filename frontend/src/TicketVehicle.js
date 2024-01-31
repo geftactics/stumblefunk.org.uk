@@ -70,6 +70,7 @@ const TicketVehicle = ({ groupCode }) => {
 
   useEffect(() => {
     fetchDriverData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [groupCode]);
 
 
