@@ -70,6 +70,5 @@ jobs:
         path: accreditation
   
     - name: Copy to S3
-      working-directory: frontend
       run: pwd && ls -la && aws s3 sync accreditation s3://stumblefunk-www-dev/accreditation
   
