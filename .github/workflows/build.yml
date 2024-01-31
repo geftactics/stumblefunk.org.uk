@@ -31,6 +31,12 @@ jobs:
       working-directory: frontend
       run: npm run build
 
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: accreditation
+        path: frontend/build
+        overwrite: true
 
   deploy-dev:
     runs-on: ubuntu-latest
@@ -56,8 +62,14 @@ jobs:
         tg_version: ${{ env.terragrunt_version }}
         tg_dir: environments/dev
         tg_command: 'apply'
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: accreditation
+        path: accreditation
   
-    - name: Copy build to s3
+    - name: Copy to S3
       working-directory: frontend
-      run: pwd && ls -la && aws s3 sync frontend/build s3://stumblefunk-www-dev/accreditation
+      run: pwd && ls -la && aws s3 sync accreditation s3://stumblefunk-www-dev/accreditation
   
