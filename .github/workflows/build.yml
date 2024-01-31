@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Use Node.js LTS
       uses: actions/setup-node@v3
@@ -37,7 +37,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Install Terragrunt
       run: wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.54.22/terragrunt_linux_amd64 -O /usr/local/bin/terragrunt && chmod +x /usr/local/bin/terragrunt
