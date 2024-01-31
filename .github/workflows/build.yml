@@ -58,5 +58,5 @@ jobs:
         tg_command: 'apply'
   
     - name: Copy build to s3
-      run: aws s3 sync frontend/build s3://stumblefunk-www-dev/accreditation
+      run: pwd && ls -la && aws s3 sync frontend/build s3://stumblefunk-www-dev/accreditation
   
