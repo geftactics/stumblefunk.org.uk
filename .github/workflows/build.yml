@@ -16,8 +16,10 @@ jobs:
     - name: Change working directory
       run: cd frontend
 
-    - name: Set up Node from .nvmrc
-      run: nvm install
+    - name: Use Node.js LTS
+      uses: actions/setup-node@v3
+      with:
+        node-version: 'lts/*'
 
     - name: Install dependencies
       run: npm ci
