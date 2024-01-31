@@ -23,11 +23,9 @@ const App = () => {
 
   const handleLogin = (message, code) => {
     if (message === 'USER' || message === 'ADMIN') {
-      // Login success, set variables
       setUserType(message);
       setGroupCode(code);
     } else {
-      // Bad login, clear variables
       setUserType('');
       setGroupCode('');
     }

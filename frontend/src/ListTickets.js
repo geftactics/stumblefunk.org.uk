@@ -4,6 +4,7 @@ import config from './config';
 const ListTickets = ({ groupCode, ticketType }) => {
   const [groups, setGroups] = useState([]);
   const [tickets, setTickets] = useState({});
+  const [allTickets, setAllTickets] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
@@ -41,10 +42,15 @@ const ListTickets = ({ groupCode, ticketType }) => {
 
           if (ticketsResponse.ok) {
             const ticketsData = await ticketsResponse.json();
+            const allTickets = ticketsData || [];
             const selectedTickets = ticketsData[ticketType] || [];
             setTickets(prevTickets => ({
               ...prevTickets,
               [group.group_name]: selectedTickets,
+            }));
+            setAllTickets(prevTickets => ({
+              ...prevTickets,
+              [group.group_name]: allTickets,
             }));
 
           } else {
@@ -68,18 +74,30 @@ const ListTickets = ({ groupCode, ticketType }) => {
       vehicle: ['driver_id', 'vehicle_reg', 'vehicle_size', 'vehicle_parking', 'mobile_phone'],
     };
   
-    const groupFields = ['group_name']; // Add group_name to the fields to search
+    const groupFields = ['group_name'];
   
     const fieldsToSearch = ticketFields[ticketType].concat(groupFields);
     const searchableText = fieldsToSearch.map(field => {
       if (field === 'group_name') {
-        return groupName; // Use group name for the 'group_name' field
+        return groupName;
       }
       return ticket[field];
     }).join(' ');
   
     return searchableText.toLowerCase().includes(searchTerm.toLowerCase());
   };
+
+
+  function findLinkedName(id) {
+    for (const groupName in allTickets) {
+      const groupTickets = allTickets[groupName]['adult'];
+      const linkedTicket = groupTickets.find(ticket => ticket.ticket_id === id);
+      if (linkedTicket) {
+        return `${linkedTicket.first_name} ${linkedTicket.last_name}`;
+      }
+    }
+    return 'unknown';
+  }
 
   return (
     <div className="container">
@@ -114,8 +132,9 @@ const ListTickets = ({ groupCode, ticketType }) => {
             {ticketType === 'vehicle' && (
               <>
                 <th>Driver</th>
-                <th>Vehicle Type</th>
-                <th>Vehicle Parking</th>
+                <th>Registration</th>
+                <th>Type</th>
+                <th>Parking</th>
                 <th>Mobile Phone</th>
               </>
             )}
@@ -129,7 +148,7 @@ const ListTickets = ({ groupCode, ticketType }) => {
                   <td>{groupName}</td>
                   {ticketType === 'adult' && (
                     <>
-                      <td>{`${ticket.first_name} ${ticket.last_name}`}</td>
+                      <td>{ticket.first_name} {ticket.last_name}</td>
                       <td>{ticket.involvement}</td>
                       <td>{ticket.mobile_phone}</td>
                       <td>{ticket.email}</td>
@@ -137,15 +156,16 @@ const ListTickets = ({ groupCode, ticketType }) => {
                   )}
                   {ticketType === 'child' && (
                     <>
-                      <td>{`${ticket.first_name} ${ticket.last_name}`}</td>
+                      <td>{ticket.first_name} {ticket.last_name}</td>
                       <td>{ticket.child_age}</td>
-                      <td>{ticket.parent_id}</td>
+                      <td>{findLinkedName(ticket.parent_id)}</td>
                       <td>{ticket.mobile_phone}</td>
                     </>
                   )}
                   {ticketType === 'vehicle' && (
                     <>
-                      <td>{`${ticket.driver_id}`}</td>
+                      <td>{findLinkedName(ticket.driver_id)}</td>
+                      <td><big><span className='badge badge-warning'>{ticket.vehicle_reg}</span></big></td>
                       <td>{ticket.vehicle_size}</td>
                       <td>{ticket.vehicle_parking}</td>
                       <td>{ticket.mobile_phone}</td>

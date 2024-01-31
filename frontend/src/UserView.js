@@ -46,7 +46,6 @@ const UserView = ({ groupCode }) => {
   };
 
   useEffect(() => {
-    // Initial data fetch
     fetchData();
   }, [groupCode]);
 

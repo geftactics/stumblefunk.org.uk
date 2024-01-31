@@ -45,7 +45,7 @@ const Totals = ({ groupCode }) => {
           <div className="card">
             <div className="card-header">Adults</div>
             <div className="card-body">
-              <p className="card-text"><h1 className="text-muted">{totalUsedAdults} of {totalAdults}</h1></p>
+              <span className="card-text"><h1 className="text-muted">{totalUsedAdults} of {totalAdults}</h1></span>
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@ const Totals = ({ groupCode }) => {
           <div className="card">
             <div className="card-header">Children</div>
             <div className="card-body">
-              <p className="card-text"><h1 className="text-muted">{totalUsedChildren} of {totalChildren}</h1></p>
+              <span className="card-text"><h1 className="text-muted">{totalUsedChildren} of {totalChildren}</h1></span>
             </div>
           </div>
         </div>
@@ -61,7 +61,7 @@ const Totals = ({ groupCode }) => {
           <div className="card">
             <div className="card-header">Vehicles</div>
             <div className="card-body">
-              <p className="card-text"><h1 className="text-muted">{totalUsedVehicles} of {totalVehicles}</h1></p>
+              <span className="card-text"><h1 className="text-muted">{totalUsedVehicles} of {totalVehicles}</h1></span>
             </div>
           </div>
         </div>

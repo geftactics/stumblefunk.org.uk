@@ -1,12 +1,7 @@
 # Web-UI
 
-My first ever attempt at React, after never having used it before. Don't judge ;)
+My first ever attempt at React. Never touched it before this, so don't judge ;)
 
-
-TODO:
-- Totals
-- Ticket List
-- Vehicle List
 
 
 In the project directory, you can run:
