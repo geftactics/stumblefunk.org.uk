@@ -116,7 +116,7 @@ const UserView = ({ groupCode }) => {
             <div className="card-body">
               <div className="card-text">
                 {generateTickets('adult')}
-                {(groupInfo.adult_used < groupInfo.adult) && <div><br /><Link to="/add/adult" className='btn btn-sm btn-outline-dark'><i className='fa fa-plus'></i> Add</Link></div>}
+                {(groupInfo.adult_used < groupInfo.adult) && <div><br /><Link to="/accreditation/add/adult" className='btn btn-sm btn-outline-dark'><i className='fa fa-plus'></i> Add</Link></div>}
               </div>
             </div>
           </div>
@@ -128,7 +128,7 @@ const UserView = ({ groupCode }) => {
             <div className="card-body">
               <div className="card-text">
                 {generateTickets('child')}
-                {(groupInfo.child_used < groupInfo.child) && <div><br /><Link to="/add/child" className='btn btn-sm btn-outline-dark'><i className='fa fa-plus'></i> Add</Link></div>}
+                {(groupInfo.child_used < groupInfo.child) && <div><br /><Link to="/accreditation/add/child" className='btn btn-sm btn-outline-dark'><i className='fa fa-plus'></i> Add</Link></div>}
               </div>
             </div>
           </div>
@@ -140,7 +140,7 @@ const UserView = ({ groupCode }) => {
             <div className="card-body">
               <div className="card-text">
                 {generateVehicles()}
-                {(groupInfo.vehicle_used < groupInfo.vehicle) && <div><br /><Link to="/add/vehicle" className='btn btn-sm btn-outline-dark'><i className='fa fa-plus'></i> Add</Link></div>}
+                {(groupInfo.vehicle_used < groupInfo.vehicle) && <div><br /><Link to="/accreditation/add/vehicle" className='btn btn-sm btn-outline-dark'><i className='fa fa-plus'></i> Add</Link></div>}
               </div>
             </div>
           </div>

@@ -107,7 +107,7 @@ const AdminView = ({ groupCode, onUpdateLogin }) => {
                 <span className={`badge text-light ${group.vehicle_used === 0 ? 'bg-secondary' : parseInt(group.vehicle) === parseInt(group.vehicle_used) ? 'bg-success' : 'bg-primary'}`}>{group.vehicle_used} / {group.vehicle}</span>
               </td>
               <td>
-                <Link to={`/groups/edit/${group.group_id}`} className="btn btn-sm btn-outline-dark">
+                <Link to={`/accreditation/groups/edit/${group.group_id}`} className="btn btn-sm btn-outline-dark">
                   <i className="fa fa-edit"></i> Edit
                 </Link>
                 {' '}
