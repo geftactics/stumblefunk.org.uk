@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "www" {
-  bucket        = "${var.domain}"
+  bucket        = "www.${var.domain}"
   force_destroy = true
 }
 
@@ -10,7 +10,6 @@ resource "aws_s3_account_public_access_block" "www" {
   ignore_public_acls = true
   restrict_public_buckets = true
 }
-
 
 
 locals {

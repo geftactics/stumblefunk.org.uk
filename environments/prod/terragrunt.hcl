@@ -10,5 +10,5 @@ include {
 
 # Specfic variables for this environment
 inputs = {
-  domain = "www.stumblefunk.org.uk"
+  domain = "stumblefunk.org.uk"
 }

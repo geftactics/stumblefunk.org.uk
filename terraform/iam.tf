@@ -10,8 +10,6 @@ data "aws_iam_policy_document" "lambda" {
 }
 
 
-
-
 resource "aws_iam_role" "lambda" {
   name               = "${var.product}-role-${var.environment}"
   assume_role_policy = data.aws_iam_policy_document.lambda.json

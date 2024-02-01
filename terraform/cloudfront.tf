@@ -7,8 +7,6 @@ resource "aws_cloudfront_origin_access_control" "www" {
 }
 
 
-
-
 resource "aws_cloudfront_distribution" "www" {
   origin {
     domain_name              = aws_s3_bucket.www.bucket_regional_domain_name
@@ -18,9 +16,9 @@ resource "aws_cloudfront_distribution" "www" {
 
   enabled             = true
   default_root_object = "index.html"
+  comment             = "${var.product}-${var.environment}"
 
-  #   Optional - Extra CNAMEs (alternate domain names), if any, for this distribution
-  #   aliases             = ["mysite.example.com", "yoursite.example.com"]
+  aliases             = ["www.${var.domain}", var.domain]
 
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
@@ -57,7 +55,8 @@ resource "aws_cloudfront_distribution" "www" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn = aws_acm_certificate.this.arn
+    ssl_support_method = "sni-only"
   }
   
 }
