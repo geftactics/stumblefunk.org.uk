@@ -41,6 +41,46 @@ jobs:
   deploy-dev:
     runs-on: ubuntu-latest
     needs: build
+    environment: dev
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: arn:aws:iam::603042156394:role/_github_actions
+        aws-region: eu-west-1
+
+    - name: Terragrunt
+      uses: gruntwork-io/terragrunt-action@v2
+      with:
+        tf_version: ${{ env.terraform_version }}
+        tg_version: ${{ env.terragrunt_version }}
+        tg_dir: environments/dev
+        tg_command: 'apply'
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: accreditation
+        path: accreditation
+  
+    - name: Copy to S3
+      run: aws s3 sync accreditation s3://stumblefunk-www-dev/accreditation
+
+    - name: Load env config
+      run: aws s3 cp s3://stumblefunk-www-dev/accreditation/config.js.env s3://stumblefunk-www-dev/accreditation/config.js
+
+
+  deploy-prod:
+    runs-on: ubuntu-latest
+    needs: [build, dev]
+    environment: prod
     permissions:
       id-token: write
       contents: read

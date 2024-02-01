@@ -8,16 +8,16 @@ resource "aws_api_gateway_deployment" "this" {
   rest_api_id = aws_api_gateway_rest_api.this.id
   stage_name  = var.environment
   depends_on = [
-    aws_api_gateway_integration" "health_integration,
-    aws_api_gateway_integration" "group_get_integration,
-    aws_api_gateway_integration" "group_post_integration,
-    aws_api_gateway_integration" "group_patch_integration,
-    aws_api_gateway_integration" "group_delete_integration,
-    aws_api_gateway_integration" "groups_get_integration,
-    aws_api_gateway_integration" "ticket_post_integration,
-    aws_api_gateway_integration" "ticket_delete_integration,
-    aws_api_gateway_integration" "tickets_get_integration,
-    aws_api_gateway_integration" "login_post_integration
+    aws_api_gateway_integration.health_integration,
+    aws_api_gateway_integration.group_get_integration,
+    aws_api_gateway_integration.group_post_integration,
+    aws_api_gateway_integration.group_patch_integration,
+    aws_api_gateway_integration.group_delete_integration,
+    aws_api_gateway_integration.groups_get_integration,
+    aws_api_gateway_integration.ticket_post_integration,
+    aws_api_gateway_integration.ticket_delete_integration,
+    aws_api_gateway_integration.tickets_get_integration,
+    aws_api_gateway_integration.login_post_integration
   ]
 }
 
