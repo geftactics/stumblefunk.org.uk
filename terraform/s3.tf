@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "www" {
-  bucket        = "${var.product}-www-${var.environment}"
+  bucket        = "${var.domain}"
   force_destroy = true
 }
 

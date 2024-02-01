@@ -16,10 +16,11 @@ resource "aws_lambda_function" "accreditation" {
     variables = {
       DDB_TABLE_GROUPS  = aws_dynamodb_table.groups.name
       DDB_TABLE_TICKETS = aws_dynamodb_table.tickets.name
-      MASTER_USER = "masterpass"
+      MASTER_USER = jsondecode(data.aws_secretsmanager_secret_version.this.secret_string)["${var.environment}"]
     }
   }
 }
+
 
 resource "aws_lambda_permission" "apigw" {
   statement_id  = "AllowExecutionFromAPIGateway"

@@ -317,7 +317,7 @@ def create_ticket(request_body):
                     "group_id": group_id,
                     "driver_id": request_body.get('driver_id'),
                     "mobile_phone": request_body.get('mobile_phone').replace(" ", ""),
-                    "vehicle_reg": request_body.get('vehicle_reg').replace(" ", ""),
+                    "vehicle_reg": request_body.get('vehicle_reg').replace(" ", "").upper(),
                     "vehicle_size": request_body.get('vehicle_size'),
                     "vehicle_parking": request_body.get('vehicle_parking'),
                 }

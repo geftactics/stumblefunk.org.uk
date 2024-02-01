@@ -100,7 +100,7 @@ jobs:
       with:
         tf_version: ${{ env.terraform_version }}
         tg_version: ${{ env.terragrunt_version }}
-        tg_dir: environments/dev
+        tg_dir: environments/prod
         tg_command: 'apply'
 
     - name: Download build artifacts
@@ -114,3 +114,11 @@ jobs:
 
     - name: Load env config
       run: aws s3 cp s3://stumblefunk-www-dev/accreditation/config.js.env s3://stumblefunk-www-dev/accreditation/config.js
+
+    - name: Tear down dev
+      uses: gruntwork-io/terragrunt-action@v2
+      with:
+        tf_version: ${{ env.terraform_version }}
+        tg_version: ${{ env.terragrunt_version }}
+        tg_dir: environments/dev
+        tg_command: 'destroy'

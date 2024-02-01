@@ -9,3 +9,7 @@ variable "environment" {
 variable "product" {
   type = string
 }
+
+variable "domain" {
+  type = string
+}
