@@ -16,7 +16,7 @@ resource "aws_cloudfront_distribution" "www" {
 
   enabled             = true
   default_root_object = "index.html"
-  comment             = "${var.product}-${var.environment}"
+  comment             = var.domain
 
   aliases             = ["www.${var.domain}", var.domain]
 
