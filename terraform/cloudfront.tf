@@ -25,6 +25,11 @@ resource "aws_cloudfront_distribution" "www" {
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = aws_s3_bucket.www.bucket_regional_domain_name
 
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.index_rewrite.arn
+    }
+
     forwarded_values {
       query_string = true
 
@@ -91,3 +96,17 @@ data "aws_iam_policy_document" "cloudfront_oac_access" {
     }
   }
 }
+
+
+resource "aws_cloudfront_function" "index_rewrite" {
+  name    = "stumblefunk-org-uk-index-rewrite-${var.environment}"
+  runtime = "cloudfront-js-2.0"
+  comment = "Index.html rewrite"
+  publish = true
+  code    = file("${path.module}/src/index_rewrite.js")
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
