@@ -59,8 +59,17 @@ const TicketChild = ({ groupCode }) => {
 
       if (response.ok) {
         const responseData = await response.json();
-        const adultData = responseData.adult || [];
-        setParentData(adultData);
+        
+        const childData = responseData.child || [];
+        const parentIdsInChild = childData.map(child => child.parent_id);
+
+        // Filter out adults based on the number of matches
+        const filteredParentData = (responseData.adult || []).filter(adult => {
+          const matchingChildCount = parentIdsInChild.filter(parentId => parentId === adult.ticket_id).length;
+          return matchingChildCount <= 1; // Include if 0 or 1 match
+        });
+
+        setParentData(filteredParentData);
       } else {
         console.error('Error fetching parent data:', response.statusText);
       }

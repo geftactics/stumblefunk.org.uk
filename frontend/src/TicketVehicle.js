@@ -57,8 +57,12 @@ const TicketVehicle = ({ groupCode }) => {
 
       if (response.ok) {
         const responseData = await response.json();
-        const adultData = responseData.adult || [];
-        setDriverData(adultData);
+        const vehicleData = responseData.vehicle || [];
+        const driverIdsInVehicles = vehicleData.map(vehicle => vehicle.driver_id);
+        const filteredAdultData = (responseData.adult || []).filter(adult => {
+          return !driverIdsInVehicles.includes(adult.ticket_id);
+        });
+        setDriverData(filteredAdultData);
       } else {
         console.error('Error fetching driver data:', response.statusText);
       }
