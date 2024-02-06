@@ -51,7 +51,7 @@ const UserView = ({ groupCode }) => {
 
   const handleRemoveTicket = async (ticketId) => {
     try {
-      const response = await fetch(`$window.config.apiUrl}/ticket?ticket_id=${ticketId}`, {
+      const response = await fetch(`${window.config.apiUrl}/ticket?ticket_id=${ticketId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': groupCode,
