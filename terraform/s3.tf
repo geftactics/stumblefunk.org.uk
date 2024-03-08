@@ -4,14 +4,6 @@ resource "aws_s3_bucket" "www" {
 }
 
 
-resource "aws_s3_account_public_access_block" "www" {
-  block_public_acls   = true
-  block_public_policy = true
-  ignore_public_acls = true
-  restrict_public_buckets = true
-}
-
-
 locals {
   folder_files = [
     for file in flatten(fileset("${path.module}/public_html/**", "**")) :

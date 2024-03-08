@@ -10,6 +10,7 @@ resource "aws_lambda_function" "accreditation" {
   role             = aws_iam_role.lambda.arn
   handler          = "lambda.handler"
   source_code_hash = data.archive_file.lambda.output_base64sha256
+  timeout          = 10
   runtime          = "python3.12"
 
   environment {

@@ -6,7 +6,7 @@ import os
 import uuid
 from datetime import datetime, date
 
-close_date = "2024-02-26"
+close_date = "2024-05-31"
 
 
 logger = logging.getLogger()
