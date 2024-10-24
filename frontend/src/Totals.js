@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const Totals = ({ groupCode }) => {
-  const [totalsData, setTotalsData] = useState({});
+  const [totalsData, setTotalsData] = useState(null);
 
   useEffect(() => {
     const fetchTotalsData = async () => {
@@ -26,6 +26,41 @@ const Totals = ({ groupCode }) => {
     fetchTotalsData();
   }, [groupCode]);
 
+  // If data is not yet loaded, render a placeholder to keep the box height
+  if (!totalsData) {
+    return (
+      <div className="container">
+        <h2>Ticket Totals</h2>
+        <br/>
+        <div className="row">
+          <div className="col-sm-4">
+            <div className="card">
+              <div className="card-header">Adults</div>
+              <div className="card-body">
+                <h1 className="text-muted">&nbsp;</h1>
+              </div>
+            </div>
+          </div>
+          <div className="col-sm-4">
+            <div className="card">
+              <div className="card-header">Children</div>
+              <div className="card-body">
+                <h1 className="text-muted">&nbsp;</h1>
+              </div>
+            </div>
+          </div>
+          <div className="col-sm-4">
+            <div className="card">
+              <div className="card-header">Vehicles</div>
+              <div className="card-body">
+                <h1 className="text-muted">&nbsp;</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const totalAdults = totalsData.groups ? totalsData.groups.reduce((acc, group) => acc + parseInt(group.adult), 0) : 0;
   const totalChildren = totalsData.groups ? totalsData.groups.reduce((acc, group) => acc + parseInt(group.child), 0) : 0;
@@ -44,7 +79,7 @@ const Totals = ({ groupCode }) => {
           <div className="card">
             <div className="card-header">Adults</div>
             <div className="card-body">
-              <span className="card-text"><h1 className="text-muted">{totalUsedAdults} of {totalAdults}</h1></span>
+              <h1 className="text-muted">{totalUsedAdults} of {totalAdults}</h1>
             </div>
           </div>
         </div>
@@ -52,7 +87,7 @@ const Totals = ({ groupCode }) => {
           <div className="card">
             <div className="card-header">Children</div>
             <div className="card-body">
-              <span className="card-text"><h1 className="text-muted">{totalUsedChildren} of {totalChildren}</h1></span>
+              <h1 className="text-muted">{totalUsedChildren} of {totalChildren}</h1>
             </div>
           </div>
         </div>
@@ -60,7 +95,7 @@ const Totals = ({ groupCode }) => {
           <div className="card">
             <div className="card-header">Vehicles</div>
             <div className="card-body">
-              <span className="card-text"><h1 className="text-muted">{totalUsedVehicles} of {totalVehicles}</h1></span>
+              <h1 className="text-muted">{totalUsedVehicles} of {totalVehicles}</h1>
             </div>
           </div>
         </div>

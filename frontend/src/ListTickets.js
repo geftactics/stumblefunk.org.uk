@@ -31,40 +31,36 @@ const ListTickets = ({ groupCode, ticketType }) => {
 
   useEffect(() => {
     const fetchDataForGroups = async () => {
-      for (const group of groups) {
-        try {
-          const ticketsResponse = await fetch(`${window.config.apiUrl}/tickets?group_id=${group.group_id}`, {
-            headers: {
-              'Authorization': groupCode,
-            },
-          });
-
-          if (ticketsResponse.ok) {
-            const ticketsData = await ticketsResponse.json();
-            const allTickets = ticketsData || [];
-            const selectedTickets = ticketsData[ticketType] || [];
-            setTickets(prevTickets => ({
-              ...prevTickets,
-              [group.group_name]: selectedTickets,
-            }));
-            setAllTickets(prevTickets => ({
-              ...prevTickets,
-              [group.group_name]: allTickets,
-            }));
-
-          } else {
-            console.error('Error fetching tickets data:', ticketsResponse.statusText);
-          }
-        } catch (error) {
-          console.error('Error during tickets data fetch:', error);
-        }
-      }
+      const fetchPromises = groups.map(group => 
+        fetch(`${window.config.apiUrl}/tickets?group_id=${group.group_id}`, {
+          headers: { 'Authorization': groupCode },
+        })
+          .then(response => response.json())
+          .catch(error => console.error('Error fetching tickets:', error))
+      );
+  
+      const ticketsDataArray = await Promise.all(fetchPromises);
+  
+      ticketsDataArray.forEach((ticketsData, index) => {
+        const groupName = groups[index].group_name;
+        const allTickets = ticketsData || [];
+        const selectedTickets = ticketsData[ticketType] || [];
+        setTickets(prevTickets => ({
+          ...prevTickets,
+          [groupName]: selectedTickets,
+        }));
+        setAllTickets(prevTickets => ({
+          ...prevTickets,
+          [groupName]: allTickets,
+        }));
+      });
     };
-
+  
     if (groups.length > 0) {
       fetchDataForGroups();
     }
   }, [groups, groupCode, ticketType]);
+  
 
   const filterTickets = (ticket, groupName) => {
     const ticketFields = {
@@ -148,7 +144,7 @@ const ListTickets = ({ groupCode, ticketType }) => {
                   {ticketType === 'adult' && (
                     <>
                       <td>{ticket.first_name} {ticket.last_name}</td>
-                      <td>{ticket.involvement}</td>
+                      <td><big><span className='badge badge-info'>{ticket.involvement}</span></big></td>
                       <td>{ticket.mobile_phone}</td>
                       <td>{ticket.email}</td>
                     </>
