@@ -11,12 +11,8 @@ body.login {
 .navbar-container {
   background-color: #343a40;
   padding-left:15px;
+  padding-right:15px;
   margin-bottom:15px;
-}
-
-.nav-item {
-  margin-right:10px;
-  margin-bottom:5px;
 }
 
 .form-signin {

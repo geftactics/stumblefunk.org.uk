@@ -92,7 +92,7 @@ const UserView = ({ groupCode }) => {
   const generateVehicles = () => {
     return tickets['vehicle'].map((ticket, index) => (
       <div key={index}>
-        &bull; <big><span className="badge badge-warning">{ticket.vehicle_reg}</span>{' '}</big>
+        &bull; <big><span className="badge bg-warning text-dark">{ticket.vehicle_reg}</span>{' '}</big>
         <span onClick={() => handleRemoveTicket(ticket.ticket_id)} title="Remove" style={{ cursor: 'pointer' }}>
           <small>
             <i className="text-primary fa fa-window-close"></i>

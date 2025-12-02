@@ -144,7 +144,7 @@ const ListTickets = ({ groupCode, ticketType }) => {
                   {ticketType === 'adult' && (
                     <>
                       <td>{ticket.first_name} {ticket.last_name}</td>
-                      <td><big><span className='badge badge-info'>{ticket.involvement}</span></big></td>
+                      <td><big><span className='badge bg-info text-dark'>{ticket.involvement}</span></big></td>
                       <td>{ticket.mobile_phone}</td>
                       <td>{ticket.email}</td>
                     </>
@@ -160,7 +160,7 @@ const ListTickets = ({ groupCode, ticketType }) => {
                   {ticketType === 'vehicle' && (
                     <>
                       <td>{findLinkedName(ticket.driver_id)}</td>
-                      <td><big><span className='badge badge-warning'>{ticket.vehicle_reg}</span></big></td>
+                      <td><big><span className='badge bg-warning text-dark'>{ticket.vehicle_reg}</span></big></td>
                       <td>{ticket.vehicle_size}</td>
                       <td>{ticket.vehicle_parking}</td>
                       <td>{ticket.mobile_phone}</td>

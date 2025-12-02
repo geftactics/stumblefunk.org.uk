@@ -81,10 +81,10 @@ const TicketVehicle = ({ groupCode }) => {
     <div className="container">
       <h2>Vehicle Pass</h2>
 
-      <form className="card-header alert-dark" onSubmit={handleSubmit}>
+      <form className="alert alert-dark" onSubmit={handleSubmit}>
 
       <div className="form-group row">
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="driver_id" className="col-form-label">Driver</label>
             <select
               className="form-control"
@@ -101,7 +101,7 @@ const TicketVehicle = ({ groupCode }) => {
               ))}
             </select>
           </div>
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="vehicle_size" className="col-form-label">Vehicle Size</label>
             <select
               className="form-control"
@@ -119,7 +119,7 @@ const TicketVehicle = ({ groupCode }) => {
         </div>
 
         <div className="form-group row">
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="vehicle_reg">Vehicle Registration</label>
             <input
               className="form-control"
@@ -130,7 +130,7 @@ const TicketVehicle = ({ groupCode }) => {
               required
             />
           </div>
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="mobile_phone">Drivers Mobile</label>
             <input
               className="form-control"
@@ -144,7 +144,7 @@ const TicketVehicle = ({ groupCode }) => {
         </div>
 
         <div className="form-group row">
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="vehicle_parking" className="col-form-label">Car Park</label>
             <select
               className="form-control"
@@ -161,13 +161,13 @@ const TicketVehicle = ({ groupCode }) => {
           </div>
         </div>
 
-        <div className="form-group row">
+        <div className="form-group row mt-3">
           <div className="form-group col-6">
             <button className="btn btn-sm btn-outline-dark" onClick={() => { navigate('/accreditation/'); }}>
               <i className="fa fa-mail-reply"></i> Back
             </button>
           </div>
-          <div className="form-group col-6 text-right">
+          <div className="form-group col-6 text-end">
             <button type="submit" className="btn btn-sm btn-outline-dark">
               <i className="fa fa-edit"></i> Save
             </button>

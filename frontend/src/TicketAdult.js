@@ -51,10 +51,10 @@ const TicketAdult = ({ groupCode }) => {
         When arriving on site, ID will be required in order to gain entry - So please ensure that names are entered correctly!
       </div>
 
-      <form className="card-header alert-dark" onSubmit={handleSubmit}>
+      <form className="alert alert-dark" onSubmit={handleSubmit}>
 
         <div className="form-group row">
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="first_name">First Name</label>
             <input
               className="form-control"
@@ -65,7 +65,7 @@ const TicketAdult = ({ groupCode }) => {
               required
             />
           </div>
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="last_name">Last Name</label>
             <input
               className="form-control"
@@ -79,7 +79,7 @@ const TicketAdult = ({ groupCode }) => {
         </div>
 
         <div className="form-group row">
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="mobile_phone">Mobile Phone</label>
             <input
               className="form-control"
@@ -92,7 +92,7 @@ const TicketAdult = ({ groupCode }) => {
               required
             />
           </div>
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="email">Email Address (for e-ticket)</label>
             <input
               className="form-control"
@@ -106,7 +106,7 @@ const TicketAdult = ({ groupCode }) => {
         </div>
 
         <div className="form-group row">
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="involvement" className="col-form-label">Involvement</label>
             <select
               className="form-control"
@@ -124,13 +124,13 @@ const TicketAdult = ({ groupCode }) => {
           </div>
         </div>
 
-        <div className="form-group row">
+        <div className="form-group row mt-3">
           <div className="form-group col-6">
             <button className="btn btn-sm btn-outline-dark" onClick={() => { navigate('/accreditation/'); }}>
               <i className="fa fa-mail-reply"></i> Back
             </button>
           </div>
-          <div className="form-group col-6 text-right">
+          <div className="form-group col-6 text-end">
             <button type="submit" className="btn btn-sm btn-outline-dark">
               <i className="fa fa-edit"></i> Save
             </button>

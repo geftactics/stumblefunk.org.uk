@@ -88,10 +88,10 @@ const TicketChild = ({ groupCode }) => {
     <div className="container">
       <h2>Child Ticket</h2>
 
-      <form className="card-header alert-dark" onSubmit={handleSubmit}>
+      <form className="alert alert-dark" onSubmit={handleSubmit}>
 
         <div className="form-group row">
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="first_name">First Name</label>
             <input
               className="form-control"
@@ -102,7 +102,7 @@ const TicketChild = ({ groupCode }) => {
               required
             />
           </div>
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="last_name">Last Name</label>
             <input
               className="form-control"
@@ -116,7 +116,7 @@ const TicketChild = ({ groupCode }) => {
         </div>
 
         <div className="form-group row">
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="parent_id" className="col-form-label">Parent</label>
             <select
               className="form-control"
@@ -133,7 +133,7 @@ const TicketChild = ({ groupCode }) => {
               ))}
             </select>
           </div>
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="child_age" className="col-form-label">Age</label>
             <select
               className="form-control"
@@ -149,7 +149,7 @@ const TicketChild = ({ groupCode }) => {
         </div>
 
         <div className="form-group row">
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="child_offsite_contact">Offsite Contact Name</label>
             <input
               className="form-control"
@@ -160,7 +160,7 @@ const TicketChild = ({ groupCode }) => {
               required
             />
           </div>
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="child_offsite_mobile">Offsite Contact Phone</label>
             <input
               className="form-control"
@@ -176,7 +176,7 @@ const TicketChild = ({ groupCode }) => {
         </div>
 
         <div className="form-group row">
-          <div className="form-group col-md-6 col-xs-12">
+          <div className="form-group col-md-6 col-12">
             <label htmlFor="mobile_phone">Parents Mobile Phone</label>
             <input
               className="form-control"
@@ -191,13 +191,13 @@ const TicketChild = ({ groupCode }) => {
           </div>
         </div>
 
-        <div className="form-group row">
+        <div className="form-group row mt-3">
           <div className="form-group col-6">
             <button className="btn btn-sm btn-outline-dark" onClick={() => { navigate('/accreditation/'); }}>
               <i className="fa fa-mail-reply"></i> Back
             </button>
           </div>
-          <div className="form-group col-6 text-right">
+          <div className="form-group col-6 text-end">
             <button type="submit" className="btn btn-sm btn-outline-dark">
               <i className="fa fa-edit"></i> Save
             </button>
