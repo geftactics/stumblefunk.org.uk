@@ -107,7 +107,7 @@ const UserView = ({ groupCode }) => {
     <div className="container">
       <h2>Ticket Management - {groupInfo.group_name}</h2>
       {error ? (<p className="text-danger">{error}</p>) : (
-          <p className="text-secondary">Hi there! We've allocated you some tickets. Please assign them to people so that we can get you on the correct guest lists...</p>
+          <p className="text-secondary">Hi there! We've allocated you some tickets. Please assign them to people so that we can get you on the correct guest lists... <b>You must include yourself if you're planning on coming!</b></p>
       )}
       <div className="row">
         <div className="col-md-4">
