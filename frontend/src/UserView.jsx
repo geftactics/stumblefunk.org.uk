@@ -81,7 +81,7 @@ const UserView = ({ groupCode }) => {
         &bull; {ticket.first_name} {ticket.last_name}{' '}
         <span onClick={() => handleRemoveTicket(ticket.ticket_id)} title="Remove" style={{ cursor: 'pointer' }}>
           <small>
-            <i className="text-primary fa fa-window-close"></i>
+            <i className="text-primary bi bi-x-circle"></i>
           </small>
         </span>
         <br />
@@ -95,7 +95,7 @@ const UserView = ({ groupCode }) => {
         &bull; <big><span className="badge bg-warning text-dark">{ticket.vehicle_reg}</span>{' '}</big>
         <span onClick={() => handleRemoveTicket(ticket.ticket_id)} title="Remove" style={{ cursor: 'pointer' }}>
           <small>
-            <i className="text-primary fa fa-window-close"></i>
+            <i className="text-primary bi bi-x-circle"></i>
           </small>
         </span>
         <br />
@@ -112,11 +112,11 @@ const UserView = ({ groupCode }) => {
       <div className="row">
         <div className="col-md-4">
           <div className="card bg-light border-info">
-            <div className="card-header bg-info text-white"><i className="fa fa-2x fa-drivers-license-o"></i> Adults ({groupInfo.adult_used} of {groupInfo.adult})</div>
+            <div className="card-header bg-info text-white"><i className="bi bi-person-vcard fs-2"></i> Adults ({groupInfo.adult_used} of {groupInfo.adult})</div>
             <div className="card-body">
               <div className="card-text">
                 {generateTickets('adult')}
-                {(groupInfo.adult_used < groupInfo.adult) && <div><br /><Link to="/accreditation/add/adult" className='btn btn-sm btn-outline-dark'><i className='fa fa-plus'></i> Add</Link></div>}
+                {(groupInfo.adult_used < groupInfo.adult) && <div><br /><Link to="/accreditation/add/adult" className='btn btn-sm btn-outline-dark'><i className='bi bi-plus'></i> Add</Link></div>}
               </div>
             </div>
           </div>
@@ -124,11 +124,11 @@ const UserView = ({ groupCode }) => {
         <br />
         <div className="col-md-4">
           <div className="card bg-light border-info">
-            <div className="card-header bg-info text-white"><i className="fa fa-2x fa-child"></i> Children ({groupInfo.child_used} of {groupInfo.child})</div>
+            <div className="card-header bg-info text-white"><i className="bi bi-person-standing fs-2"></i> Children ({groupInfo.child_used} of {groupInfo.child})</div>
             <div className="card-body">
               <div className="card-text">
                 {generateTickets('child')}
-                {(groupInfo.child_used < groupInfo.child) && <div><br /><Link to="/accreditation/add/child" className='btn btn-sm btn-outline-dark'><i className='fa fa-plus'></i> Add</Link></div>}
+                {(groupInfo.child_used < groupInfo.child) && <div><br /><Link to="/accreditation/add/child" className='btn btn-sm btn-outline-dark'><i className='bi bi-plus'></i> Add</Link></div>}
               </div>
             </div>
           </div>
@@ -136,11 +136,11 @@ const UserView = ({ groupCode }) => {
         <br />
         <div className="col-md-4">
           <div className="card bg-light border-info">
-            <div className="card-header bg-info text-white"><i className="fa fa-2x fa-car"></i> Vehicles ({groupInfo.vehicle_used} of {groupInfo.vehicle})</div>
+            <div className="card-header bg-info text-white"><i className="bi bi-car-front fs-2"></i> Vehicles ({groupInfo.vehicle_used} of {groupInfo.vehicle})</div>
             <div className="card-body">
               <div className="card-text">
                 {generateVehicles()}
-                {(groupInfo.vehicle_used < groupInfo.vehicle) && <div><br /><Link to="/accreditation/add/vehicle" className='btn btn-sm btn-outline-dark'><i className='fa fa-plus'></i> Add</Link></div>}
+                {(groupInfo.vehicle_used < groupInfo.vehicle) && <div><br /><Link to="/accreditation/add/vehicle" className='btn btn-sm btn-outline-dark'><i className='bi bi-plus'></i> Add</Link></div>}
               </div>
             </div>
           </div>

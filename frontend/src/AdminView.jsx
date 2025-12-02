@@ -80,7 +80,7 @@ const AdminView = ({ groupCode, onUpdateLogin }) => {
       <h2>Group Management</h2>
       <p>
         <button onClick={handleNew} className="btn btn-sm btn-outline-dark">
-          <i className="fa fa-plus"></i> Add New Group
+          <i className="bi bi-plus"></i> Add New Group
         </button>
       </p>
       <table className="table table-striped">
@@ -108,21 +108,21 @@ const AdminView = ({ groupCode, onUpdateLogin }) => {
               </td>
               <td>
                 <Link to={`/accreditation/groups/edit/${group.group_id}`} className="btn btn-sm btn-outline-dark">
-                  <i className="fa fa-edit"></i> Edit
+                  <i className="bi bi-pencil"></i> Edit
                 </Link>
                 {' '}
                 <button
                   className="btn btn-sm btn-outline-dark"
                   onClick={() => handleDelete(group.group_id)}
                 >
-                  <i className="fa fa-trash"></i> Delete
+                  <i className="bi bi-trash"></i> Delete
                 </button>
                 {' '}
                 <button
                 className="btn btn-sm btn-outline-dark"
                 onClick={() => handleLoginSwitch(group.group_id)}
               >
-                <i className="fa fa-user"></i> Login
+                <i className="bi bi-person"></i> Login
               </button>
               </td>
             </tr>

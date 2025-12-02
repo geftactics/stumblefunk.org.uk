@@ -164,12 +164,12 @@ const TicketVehicle = ({ groupCode }) => {
         <div className="form-group row mt-3">
           <div className="form-group col-6">
             <button className="btn btn-sm btn-outline-dark" onClick={() => { navigate('/accreditation/'); }}>
-              <i className="fa fa-mail-reply"></i> Back
+              <i className="bi bi-arrow-left"></i> Back
             </button>
           </div>
           <div className="form-group col-6 text-end">
             <button type="submit" className="btn btn-sm btn-outline-dark">
-              <i className="fa fa-edit"></i> Save
+              <i className="bi bi-pencil"></i> Save
             </button>
           </div>
         </div>
