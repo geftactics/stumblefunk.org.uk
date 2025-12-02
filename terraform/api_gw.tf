@@ -8,6 +8,9 @@ resource "aws_api_gateway_deployment" "this" {
   triggers = {
     redeployment = md5(file("api_gw.tf"))
   }
+  lifecycle {
+    create_before_destroy = true
+  }
   depends_on = [
     aws_api_gateway_integration.health_integration,
     aws_api_gateway_integration.group_get_integration,
