@@ -6,7 +6,16 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import 'font-awesome/css/font-awesome.min.css';
 
-import './index.css'
+import './index.css';
+
+const envApiUrl = import.meta.env.VITE_API_URL;
+window.config = window.config || {};
+
+if (envApiUrl) {
+  window.config.apiUrl = envApiUrl;
+} else if (!window.config.apiUrl) {
+  console.warn('API URL not configured. Set VITE_API_URL or update public/config.js');
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
