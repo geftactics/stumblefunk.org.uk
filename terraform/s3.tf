@@ -39,6 +39,6 @@ resource "aws_s3_object" "this" {
 resource "aws_s3_object" "env" {
   bucket       = aws_s3_bucket.www.bucket
   key          = "accreditation/config.js.env"
-  content      = "var config = { apiUrl: '${aws_api_gateway_deployment.this.invoke_url}' }"
+  content      = "var config = { apiUrl: '${aws_api_gateway_stage.this.invoke_url}' }"
   content_type = "application/javascript"
 }

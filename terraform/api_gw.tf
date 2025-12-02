@@ -4,9 +4,10 @@ resource "aws_api_gateway_rest_api" "this" {
 }
 
 resource "aws_api_gateway_deployment" "this" {
-  stage_description = "${md5(file("api_gw.tf"))}"
   rest_api_id = aws_api_gateway_rest_api.this.id
-  stage_name  = var.environment
+  triggers = {
+    redeployment = md5(file("api_gw.tf"))
+  }
   depends_on = [
     aws_api_gateway_integration.health_integration,
     aws_api_gateway_integration.group_get_integration,
@@ -21,8 +22,15 @@ resource "aws_api_gateway_deployment" "this" {
   ]
 }
 
+resource "aws_api_gateway_stage" "this" {
+  rest_api_id   = aws_api_gateway_rest_api.this.id
+  deployment_id = aws_api_gateway_deployment.this.id
+  stage_name    = var.environment
+  description   = "Deployment ${var.environment}"
+}
+
 output "api_url" {
-  value = aws_api_gateway_deployment.this.invoke_url
+  value = aws_api_gateway_stage.this.invoke_url
 }
 
 
