@@ -148,7 +148,9 @@ const ListTickets = ({ groupCode, ticketType }) => {
                   aria-label={`${label}: sort ${sort.key === key && sort.direction === 'ascending' ? 'descending' : 'ascending'}`}
                 >
                   {label}{' '}
-                  <span aria-hidden="true">{sort.key === key ? (sort.direction === 'ascending' ? '▲' : '▼') : '↕'}</span>
+                  {sort.key === key && (
+                    <span aria-hidden="true">{sort.direction === 'ascending' ? '▲' : '▼'}</span>
+                  )}
                 </button>
               </th>
             ))}

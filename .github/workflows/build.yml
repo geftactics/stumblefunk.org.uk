@@ -1,8 +1,8 @@
 name: Build & Deploy
 
 env:
-  terraform_version: '1.6.2'
-  terragrunt_version: '0.54.22'
+  terraform_version: '1.16.2'
+  terragrunt_version: '1.1.5'
 
 on:
   push:
@@ -16,10 +16,10 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     - name: Get nodejs version
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v7
       with:
         node-version-file: 'frontend/.nvmrc'
 
@@ -32,7 +32,7 @@ jobs:
       run: npm run build
 
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: accreditation
         path: frontend/dist
@@ -48,10 +48,10 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v4
+      uses: aws-actions/configure-aws-credentials@v6
       with:
         role-to-assume: arn:aws:iam::603042156394:role/_github_actions
         aws-region: eu-west-1
@@ -65,7 +65,7 @@ jobs:
         tg_command: 'apply'
 
     - name: Download build artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: accreditation
         path: accreditation
@@ -87,10 +87,10 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v4
+      uses: aws-actions/configure-aws-credentials@v6
       with:
         role-to-assume: arn:aws:iam::603042156394:role/_github_actions
         aws-region: eu-west-1
@@ -104,7 +104,7 @@ jobs:
         tg_command: 'apply'
 
     - name: Download build artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: accreditation
         path: accreditation
