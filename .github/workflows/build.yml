@@ -56,10 +56,16 @@ jobs:
         role-to-assume: arn:aws:iam::603042156394:role/_github_actions
         aws-region: eu-west-1
 
-    - name: Terragrunt
-      uses: gruntwork-io/terragrunt-action@v2
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v4
       with:
-        tf_version: ${{ env.terraform_version }}
+        terraform_version: ${{ env.terraform_version }}
+        terraform_wrapper: false
+
+    - name: Terragrunt
+      uses: gruntwork-io/terragrunt-action@v3
+      with:
+        tf_path: terraform
         tg_version: ${{ env.terragrunt_version }}
         tg_dir: environments/dev
         tg_command: 'apply'
@@ -95,10 +101,16 @@ jobs:
         role-to-assume: arn:aws:iam::603042156394:role/_github_actions
         aws-region: eu-west-1
 
-    - name: Terragrunt
-      uses: gruntwork-io/terragrunt-action@v2
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v4
       with:
-        tf_version: ${{ env.terraform_version }}
+        terraform_version: ${{ env.terraform_version }}
+        terraform_wrapper: false
+
+    - name: Terragrunt
+      uses: gruntwork-io/terragrunt-action@v3
+      with:
+        tf_path: terraform
         tg_version: ${{ env.terragrunt_version }}
         tg_dir: environments/prod
         tg_command: 'apply'
