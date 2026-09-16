@@ -2,6 +2,14 @@
 
 My first ever attempt at React. Never touched it before this, so don't judge ;)
 
+Use the Node version pinned in `.nvmrc` (also used by CI). From `frontend/`:
+
+```sh
+nvm install
+nvm use
+npm ci
+```
+
 
 
 

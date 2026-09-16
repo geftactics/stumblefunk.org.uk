@@ -1,3 +1,4 @@
+import { comparePeople } from './sortNames';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -46,7 +47,12 @@ const TicketChild = ({ groupCode }) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+    const selectedParent = name === 'parent_id' ? parentData.find(parent => parent.ticket_id === value) : null;
+    setFormData({
+      ...formData,
+      [name]: value,
+      ...(selectedParent ? { mobile_phone: selectedParent.mobile_phone } : {}),
+    });
   };
 
   const fetchParentData = async () => {
@@ -69,7 +75,7 @@ const TicketChild = ({ groupCode }) => {
           return matchingChildCount <= 1; // Include if 0 or 1 match
         });
 
-        setParentData(filteredParentData);
+        setParentData(filteredParentData.sort(comparePeople));
       } else {
         console.error('Error fetching parent data:', response.statusText);
       }
@@ -164,7 +170,7 @@ const TicketChild = ({ groupCode }) => {
             <label htmlFor="child_offsite_mobile">Offsite Contact Phone</label>
             <input
               className="form-control"
-              type="text"
+              type="tel"
               name="child_offsite_mobile"
               pattern="[0-9 ]{11,12}"
               title="UK mobile number"

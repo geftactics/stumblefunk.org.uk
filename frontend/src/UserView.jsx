@@ -1,3 +1,4 @@
+import { comparePeople } from './sortNames';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -76,8 +77,8 @@ const UserView = ({ groupCode }) => {
   };
 
   const generateTickets = (ticketType) => {
-    return tickets[ticketType].map((ticket, index) => (
-      <div key={index}>
+    return [...tickets[ticketType]].sort(comparePeople).map((ticket) => (
+      <div key={ticket.ticket_id}>
         &bull; {ticket.first_name} {ticket.last_name}{' '}
         <span onClick={() => handleRemoveTicket(ticket.ticket_id)} title="Remove" style={{ cursor: 'pointer' }}>
           <small>
@@ -107,7 +108,7 @@ const UserView = ({ groupCode }) => {
     <div className="container">
       <h2>Ticket Management - {groupInfo.group_name}</h2>
       {error ? (<p className="text-danger">{error}</p>) : (
-          <p className="text-secondary">Hi there! We've allocated you some tickets. Please assign them to people so that we can get you on the correct guest lists... <b>You must include yourself if you're planning on coming!</b></p>
+          <p className="text-secondary">Hi there! We've allocated you some tickets. Please assign them to people so that we can get you on the correct guest lists... <br/><b>You must include yourself if you're planning on coming!</b></p>
       )}
       <div className="row">
         <div className="col-md-4">

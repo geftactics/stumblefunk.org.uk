@@ -1,3 +1,4 @@
+import { comparePeople } from './sortNames';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -44,7 +45,12 @@ const TicketVehicle = ({ groupCode }) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+    const selectedDriver = name === 'driver_id' ? driverData.find(driver => driver.ticket_id === value) : null;
+    setFormData({
+      ...formData,
+      [name]: value,
+      ...(selectedDriver ? { mobile_phone: selectedDriver.mobile_phone } : {}),
+    });
   };
 
   const fetchDriverData = async () => {
@@ -62,7 +68,7 @@ const TicketVehicle = ({ groupCode }) => {
         const filteredAdultData = (responseData.adult || []).filter(adult => {
           return !driverIdsInVehicles.includes(adult.ticket_id);
         });
-        setDriverData(filteredAdultData);
+        setDriverData(filteredAdultData.sort(comparePeople));
       } else {
         console.error('Error fetching driver data:', response.statusText);
       }
@@ -134,8 +140,10 @@ const TicketVehicle = ({ groupCode }) => {
             <label htmlFor="mobile_phone">Drivers Mobile</label>
             <input
               className="form-control"
-              type="text"
+              type="tel"
               name="mobile_phone"
+              pattern="[0-9 ]{11,12}"
+              title="UK mobile number"
               value={formData.mobile_phone}
               onChange={handleChange}
               required

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = ({ onLogin }) => {
   const [code, setCode] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
@@ -60,9 +61,11 @@ const Login = ({ onLogin }) => {
         <h5 className='form-signin-heading' style={{ color: errorMessage ? '#ff6a58' : '#ffffff' }}>
           {errorMessage || 'Please sign in'}
         </h5>
+        <div className="password-field">
         <input
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           id="guid"
+          aria-label="Access code"
           className="form-control"
           placeholder="Access code"
           value={code}
@@ -71,6 +74,17 @@ const Login = ({ onLogin }) => {
           required
           autoFocus
         />
+        <button
+          type="button"
+          className="password-toggle"
+          onClick={() => setShowPassword(visible => !visible)}
+          aria-label={showPassword ? 'Hide password' : 'Show password'}
+          aria-controls="guid"
+          title={showPassword ? 'Hide password' : 'Show password'}
+        >
+          <i className={showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'} aria-hidden="true" />
+        </button>
+        </div>
         <br/>
         <button className="btn btn-lg btn-secondary w-100" onClick={() => { navigate('/accreditation'); handleLoginApi(); }}>
           Sign in
