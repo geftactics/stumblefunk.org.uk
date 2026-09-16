@@ -4,6 +4,8 @@
 # remote state, and locking: https://github.com/gruntwork-io/terragrunt
 # ---------------------------------------------------------------------------------------------------------------------
 
+terragrunt_version_constraint = ">= 1.1.5, < 2.0.0"
+
 # Locals
 
 locals {
@@ -17,11 +19,11 @@ locals {
 remote_state {
   backend = "s3"
   config = {
-    encrypt = true
+    encrypt        = true
     bucket         = "tfstate-squiggle-org"
     key            = "${local.product}/${local.env}/${local.aws_region}/terraform.tfstate"
     region         = local.aws_region
-    dynamodb_table = "terraform-locks"
+    use_lockfile   = true
   }
 }
 
